@@ -11,13 +11,14 @@ Format: krótki kontekst, decyzja i konsekwencje. Wzorzec: Michael Nygard, „Do
 | [0003](0003-postgres-flyway.md) | PostgreSQL i Flyway od początku | Accepted (wdrożenie: T-005, T-006) |
 | [0004](0004-komunikacja-przez-zdarzenia.md) | Moduły komunikują się przez publiczne API i zdarzenia domenowe | Accepted |
 | [0005](0005-domena-bez-springa.md) | Domena bez zależności od Springa/JPA (porty i adaptery) | Accepted |
-| [0006](0006-spring-boot-4.md) | Spring Boot 4.x zamiast 3.x z pierwotnego planu | Accepted — do potwierdzenia |
+| [0006](0006-spring-boot-4.md) | Spring Boot 4.x zamiast 3.x z pierwotnego planu | Accepted |
+| [0007](0007-zrodlo-tenant-id.md) | `tenantId`: Filter → `TenantResolver` → `TenantContext`, przekazywany jawnie do domeny; Faza 1 = domyślny tenant z YAML | Accepted (wdrożenie: T-004) |
 
 ## Otwarte decyzje
 
 | Pytanie | Opcje | Rozstrzygamy w |
 |---|---|---|
-| Skąd w Fazie 1 bierze się `tenantId`? | stała w configu / `TenantContext` z domyślnym tenantem / brak kolumny do Fazy 2 | T-004 |
+| Rozpoznawanie tenanta w Fazie 2 (host, własne domeny, panel, proxy) | kierunek opisany w ADR 0007, do potwierdzenia | Faza 2 |
 | Jak wymusić granice modułów? | Gradle submoduły `domain/infra/web` / ArchUnit / Spring Modulith | T-008 |
 | Gdzie żyje kod wspólny dla persystencji (`AuditableEntity`)? | `shared-kernel` / osobny moduł `shared-infrastructure` | T-009 |
 | REST + osobny frontend czy Thymeleaf SSR dla sklepu? | plan mówi Thymeleaf; `DietPlanController` jest REST | E1/E4 |

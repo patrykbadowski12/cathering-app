@@ -20,8 +20,5 @@ Adapter `DietPlanRepositoryImpl` jest przetestowany na prawdziwym PostgreSQL, z 
 ## Wskazówki
 - Kontener startuje kilka sekund. Sprawdź, jak go współdzielić między klasami testowymi zamiast stawiać nowy dla każdej.
 
-## Notatki
-_(Twoje notatki / pytania)_
-
 ## Review
 _(uzupełnia Claude)_

@@ -20,8 +20,5 @@ Reguły biznesowe `DietPlan` i use case'ów są pokryte szybkimi testami jednost
 - Nazwy testów w Kotlinie mogą być zdaniami w backtickach, np. ``fun `should reject blank name`()``.
 - Do asercji wystarczy `kotlin.test`. Możesz też spróbować AssertJ albo Kotest assertions i ocenić, co czyta się lepiej.
 
-## Notatki
-_(Twoje notatki / pytania)_
-
 ## Review
 _(uzupełnia Claude)_

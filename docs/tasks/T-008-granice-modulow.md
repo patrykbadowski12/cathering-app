@@ -22,8 +22,5 @@ Złamanie reguł zależności (np. `domain` importuje JPA, `module-order` import
 - [ ] Reguły sprawdzane automatycznie: (1) `domain` nie zależy od Springa ani JPA, (2) żaden moduł nie importuje `infrastructure`/`web` innego modułu.
 - [ ] Demonstracja: celowo złam regułę, pokaż, że build/test pada, a potem wycofaj zmianę.
 
-## Notatki
-_(Twoje notatki / pytania)_
-
 ## Review
 _(uzupełnia Claude)_

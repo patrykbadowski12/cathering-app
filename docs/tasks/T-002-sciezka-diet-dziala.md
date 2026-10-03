@@ -12,19 +12,16 @@
 
 ## Kryteria akceptacji
 - [ ] Kompilacja bez błędów: `findAllByTenantId` zaimplementowane, importy i nazwy w kontrolerze poprawione, `GetDietPlansUseCase` zarejestrowany jako bean.
-- [ ] `tenantId` jest spójny: domena decyduje, adapter **nie** generuje własnego. Na razie wystarczy jedna stała wartość (porządnie robimy to w T-004).
+- [ ] `tenantId` jest spójny między zapisem a odczytem: przychodzi z zewnątrz (z kontrolera), a ani domena, ani adapter nie generują własnego (ADR 0007). Na razie wystarczy stała w kontrolerze, a w T-004 zastąpi ją `TenantContext`.
 - [ ] `GET /diet-plans` zwraca listę z `id`, `name`, `kcal`, `state`.
-- [ ] Zapis jest transakcyjny. Wybierz miejsce dla `@Transactional` tak, żeby domena dalej nie znała Springa (ADR 0005) i uzasadnij wybór w Notatkach.
+- [ ] Zapis jest transakcyjny. Wybierz miejsce dla `@Transactional` tak, żeby domena dalej nie znała Springa (ADR 0005), a wybór uzasadnij w rozmowie przy review.
 - [ ] `main` przekazuje argumenty: `runApplication<...>(*args)`.
 - [ ] Sprawdzone ręcznie (HTTP Client w IntelliJ / curl / Postman). Zapisz przykładowe requesty, np. w `http/diet-plans.http`.
 
 ## Wskazówki
 - Mapowanie `DietPlanEntity → DietPlan` pojawia się w dwóch miejscach. Gdzie umieścić je raz?
 - `findAllByTenantId`: Spring Data potrafi wygenerować zapytanie z samej nazwy metody w `DietPlanJpaRepository` (*derived query methods*).
-- Pytanie do przemyślenia (nie musisz go rozwiązywać teraz): czy `DietPlan.create()` powinien sam wymyślać `tenantId`, czy dostawać go z zewnątrz?
-
-## Notatki
-_(Twoje notatki / pytania)_
+- Zgodnie z ADR 0007 `DietPlan.create()` i use case przyjmują `tenantId` jako parametr. Możesz od razu zrobić to na `UUID`, a w T-004 zamienisz go na `TenantId`.
 
 ## Review
 _(uzupełnia Claude)_

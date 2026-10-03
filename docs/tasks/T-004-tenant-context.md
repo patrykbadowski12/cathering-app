@@ -1,32 +1,33 @@
-# T-004 — Decyzja i implementacja: skąd bierze się `tenantId`
+# T-004 — `TenantContext` z domyślnym tenantem z YAML
 
-**Status:** TODO · **Etap:** 0 · **Zależy od:** T-002
+**Status:** TODO · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0007
 
 ## Cel
-Jest jedno, jawne źródło `tenantId` w aplikacji. Decyzja jest zapisana jako ADR 0007.
+Każdy request HTTP ma ustawionego tenanta (w Fazie 1 zawsze domyślnego, z `application.yaml`), a `tenantId` przepływa jawnie: kontroler → use case → domena. Mechanizm jest gotowy na podmianę w Fazie 2, gdzie zmieni się tylko implementacja `TenantResolver`.
 
 ## Czego się uczysz
-- Różnica między danymi biznesowymi (nazwa diety) a kontekstem wykonania (kto, dla jakiego tenanta).
-- `ThreadLocal`, `HandlerInterceptor`/`Filter` i cykl życia requestu w Spring MVC.
-- **YAGNI vs „tanie teraz, drogie później”**: jak rozróżnić, co warto przygotować z wyprzedzeniem.
-
-## Część 1: dyskusja (najpierw rozmowa, potem kod)
-Opcje:
-1. Bez `tenant_id` do Fazy 2 (czyste YAGNI).
-2. Kolumna `tenant_id` jest od teraz, a wartość pochodzi ze stałej w `application.yaml`.
-3. `TenantContext` w `shared-kernel` już teraz. W Fazie 1 interceptor zawsze ustawia ten sam, domyślny tenant. W Fazie 2 podmieniamy tylko sposób rozpoznawania (subdomena).
-
-Przemyśl: ile kosztuje dodanie `tenant_id` do istniejących danych później? Co zyskujesz i tracisz w każdej opcji?
+- Servlet `Filter` vs `HandlerInterceptor`: kiedy który się wywołuje i co „widzi”. Dlaczego ADR wybiera `Filter`?
+- `ThreadLocal` i pula wątków: dlaczego brak `clear()` to wyciek danych między requestami.
+- `@ConfigurationProperties`: typowana konfiguracja zamiast `@Value("...")`.
+- Strategia (Strategy pattern): interfejs `TenantResolver` i wymienne implementacje.
+- Kotlin `value class`: typ bez narzutu w runtime.
 
 ## Kryteria akceptacji
-- [ ] ADR `decisions/0007-zrodlo-tenant-id.md` zapisany (możesz go napisać sam, a ja zrobię review).
-- [ ] Implementacja zgodna z ADR. Domena nie generuje `tenantId` z powietrza.
-- [ ] Jeśli `ThreadLocal`: kontekst jest **zawsze** czyszczony po requeście, także gdy poleci wyjątek.
-- [ ] Typ `TenantId` (zamiast gołego `UUID`) w `shared-kernel`, jeśli wybierzesz opcję 2 lub 3.
-- [ ] Test potwierdzający, że kontekst nie „przecieka” między requestami.
+- [ ] `shared-kernel`: `TenantId` (value class na `UUID`) i `TenantContext` (`set` / `get` / `clear`). `get()` bez ustawionego tenanta rzuca czytelny wyjątek.
+- [ ] Interfejs `TenantResolver` (np. `resolve(request): TenantId`) i implementacja `FixedTenantResolver`.
+- [ ] Domyślny tenant w `application.yaml` (np. `catering.tenant.default-id: <uuid>`), czytany przez `@ConfigurationProperties`. Brak wartości oznacza, że aplikacja **nie startuje**.
+- [ ] Servlet `Filter` ustawia kontekst i czyści go w `finally`, także przy wyjątku.
+- [ ] Kontroler przekazuje `TenantId` jawnie do use case'ów. Use case'y i `DietPlan.create(...)` przyjmują `TenantId`, a nie `UUID`.
+- [ ] Domena nie importuje `TenantContext` ani nie generuje `tenantId`.
+- [ ] Tymczasowa stała z T-002 usunięta.
+- [ ] Testy:
+  - jednostkowy dla `TenantContext`,
+  - test filtra: kontekst jest pusty po requeście, także gdy handler rzucił wyjątek.
 
-## Notatki
-_(Twoje notatki / pytania)_
+## Wskazówki
+- Gdzie umieścić filtr i resolver? Nie są częścią żadnego bounded contextu. Zastanów się, czy to `app`, czy `shared-kernel`. Zwróć uwagę, że `shared-kernel` musiałby wtedy zależeć od Servlet API, a to temat bliski T-009.
+- JPA nie zna `TenantId`. Na granicy encja ↔ domena mapujesz `TenantId ↔ UUID` w adapterze. Alternatywą są konwertery JPA, ale to później.
+- Jak kontroler dostaje tenanta: `TenantContext.get()` wprost, czy własny argument metody (`HandlerMethodArgumentResolver`), np. `fun create(tenantId: TenantId, ...)`? Druga opcja jest ładniejsza i łatwiej ją testować. To dobre ćwiczenie, ale opcjonalne.
 
 ## Review
 _(uzupełnia Claude)_

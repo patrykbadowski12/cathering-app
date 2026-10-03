@@ -15,8 +15,5 @@ Kod persystencji wspólny dla wielu modułów (`AuditableEntity`, w przyszłośc
 - [ ] Reguły z T-008 nadal przechodzą.
 - [ ] Audyt (`createdOn`, `createdBy`) nadal się zapisuje. Sprawdź testem z T-007.
 
-## Notatki
-_(Twoje notatki / pytania)_
-
 ## Review
 _(uzupełnia Claude)_

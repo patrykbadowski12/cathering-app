@@ -21,8 +21,5 @@ Aplikacja lokalnie działa na PostgreSQL uruchamianym jednym poleceniem. H2 znik
 - Na tym etapie Hibernate jeszcze tworzy schemat (`ddl-auto: update`). To tymczasowe i znika w T-006.
 - Na Windows sprawdź, czy Docker Desktop działa z backendem WSL2.
 
-## Notatki
-_(Twoje notatki / pytania)_
-
 ## Review
 _(uzupełnia Claude)_

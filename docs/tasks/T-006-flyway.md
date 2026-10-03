@@ -11,17 +11,14 @@ Schemat bazy powstaje wyłącznie z migracji Flyway, a Hibernate tylko sprawdza 
 
 ## Kryteria akceptacji
 - [ ] Zależności Flyway dodane (dla PostgreSQL potrzebny jest dodatkowy moduł bazy danych Flyway, sprawdź dokumentację).
-- [ ] `V1__create_diet_plans.sql` tworzy tabelę `diet_plans` z kolumnami audytu i `tenant_id` (zgodnie z ADR 0007).
+- [ ] `V1__create_diet_plans.sql` tworzy tabelę `diet_plans` z kolumnami audytu i `tenant_id NOT NULL` (ADR 0007).
 - [ ] Indeks pod zapytanie „plany danego tenanta”.
 - [ ] `spring.jpa.hibernate.ddl-auto: validate`, a aplikacja startuje.
-- [ ] Eksperyment: zmień nazwę pola w encji i zobacz, co mówi `validate`. Potem wycofaj zmianę i opisz wynik w Notatkach.
+- [ ] Eksperyment: zmień nazwę pola w encji i zobacz, co mówi `validate`. Potem wycofaj zmianę, a potem powiedz przy review, co zobaczyłeś.
 
 ## Wskazówki
 - Zastanów się nad typami: `kcal` jako `integer`, a `state` jako `varchar` czy natywny `enum` PostgreSQL? Ma to wpływ na przyszłe migracje.
 - Gdzie trzymać migracje: w `app` czy w module, którego dotyczą? Każda opcja ma konsekwencje dla przyszłego podziału na serwisy (ADR 0001). Warto o tym pogadać.
-
-## Notatki
-_(Twoje notatki / pytania)_
 
 ## Review
 _(uzupełnia Claude)_
