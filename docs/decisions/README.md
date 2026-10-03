@@ -13,6 +13,7 @@ Format: krótki kontekst, decyzja i konsekwencje. Wzorzec: Michael Nygard, „Do
 | [0005](0005-domena-bez-springa.md) | Domena bez zależności od Springa/JPA (porty i adaptery) | Accepted |
 | [0006](0006-spring-boot-4.md) | Spring Boot 4.x zamiast 3.x z pierwotnego planu | Accepted |
 | [0007](0007-zrodlo-tenant-id.md) | `tenantId`: Filter → `TenantResolver` → `TenantContext`, przekazywany jawnie do domeny; Faza 1 = domyślny tenant z YAML | Accepted (wdrożenie: T-004) |
+| [0008](0008-uuid-v7-i-slug.md) | Tożsamość: UUIDv7 w typach domenowych. Czytelność: `slug` (tenant w MDC, diety w URL-ach) | Accepted (wdrożenie: T-004, T-006) |
 
 ## Otwarte decyzje
 

@@ -10,7 +10,7 @@ Kod persystencji wspólny dla wielu modułów (`AuditableEntity`, w przyszłośc
 - Dlaczego `shared-kernel` z zależnością od JPA przestaje być „czysty” i czy to problem.
 
 ## Kryteria akceptacji
-- [ ] Decyzja: `shared-kernel` czy osobny moduł (np. `shared-infrastructure`). Krótka notatka w otwartych decyzjach albo ADR 0009.
+- [ ] Decyzja: `shared-kernel` czy osobny moduł (np. `shared-infrastructure`). Zapisana jako ADR (kolejny wolny numer).
 - [ ] `AuditableEntity` przeniesiona. `module-diet` i (pusty jeszcze) `module-order` mogą z niej korzystać.
 - [ ] Reguły z T-008 nadal przechodzą.
 - [ ] Audyt (`createdOn`, `createdBy`) nadal się zapisuje. Sprawdź testem z T-007.

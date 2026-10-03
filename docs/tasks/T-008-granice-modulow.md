@@ -18,7 +18,7 @@ Złamanie reguł zależności (np. `domain` importuje JPA, `module-order` import
 | Kombinacja | np. moduły Gradle per bounded context + ArchUnit dla warstw wewnątrz modułu | Często najlepszy kompromis |
 
 ## Kryteria akceptacji
-- [ ] ADR `decisions/0008-wymuszanie-granic-modulow.md`.
+- [ ] Nowy ADR (kolejny wolny numer) o wymuszaniu granic modułów.
 - [ ] Reguły sprawdzane automatycznie: (1) `domain` nie zależy od Springa ani JPA, (2) żaden moduł nie importuje `infrastructure`/`web` innego modułu.
 - [ ] Demonstracja: celowo złam regułę, pokaż, że build/test pada, a potem wycofaj zmianę.
 
