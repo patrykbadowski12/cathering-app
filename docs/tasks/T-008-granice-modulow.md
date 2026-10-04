@@ -1,6 +1,6 @@
 # T-008 — Decyzja i implementacja: wymuszenie granic modułów
 
-**Status:** TODO · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0001, 0004, 0005
+**Status:** TODO · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0001, 0004, 0005, 0009
 
 ## Cel
 Złamanie reguł zależności (np. `domain` importuje JPA, `module-order` importuje `diet.infrastructure`) **psuje build**, a nie jest tylko łapane na review.
@@ -19,7 +19,10 @@ Złamanie reguł zależności (np. `domain` importuje JPA, `module-order` import
 
 ## Kryteria akceptacji
 - [ ] Nowy ADR (kolejny wolny numer) o wymuszaniu granic modułów.
-- [ ] Reguły sprawdzane automatycznie: (1) `domain` nie zależy od Springa ani JPA, (2) żaden moduł nie importuje `infrastructure`/`web` innego modułu.
+- [ ] Reguły sprawdzane automatycznie:
+  1. `domain` nie zależy od niczego (ani Spring, ani JPA, ani `application`),
+  2. `application` zależy tylko od `domain` i `org.springframework.transaction` (ADR 0009),
+  3. żaden moduł nie importuje `application`/`infrastructure`/`web` innego modułu.
 - [ ] Demonstracja: celowo złam regułę, pokaż, że build/test pada, a potem wycofaj zmianę.
 
 ## Review

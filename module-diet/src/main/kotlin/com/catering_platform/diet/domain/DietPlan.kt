@@ -12,7 +12,7 @@ data class DietPlan(
     val kcal: Int
 ) {
     companion object {
-        fun create(name: String, kcal: Int): DietPlan {
+        fun create(tenantId: UUID, name: String, kcal: Int): DietPlan {
             require(name.isNotBlank()) { "Diet plan name must not be blank" }
             require(kcal > 0) { "Diet plan kcal must be greater than zero" }
             return DietPlan(
@@ -20,7 +20,7 @@ data class DietPlan(
                 name = name,
                 kcal = kcal,
                 state = DietPlanState.ACTIVE,
-                tenantId = UUID.randomUUID()
+                tenantId = tenantId
             )
         }
     }

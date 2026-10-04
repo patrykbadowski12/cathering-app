@@ -10,10 +10,11 @@ Format: krótki kontekst, decyzja i konsekwencje. Wzorzec: Michael Nygard, „Do
 | [0002](0002-spring-mvc-blocking.md) | Spring MVC (blocking) i `ThreadLocal`, bez WebFlux/korutyn w Fazach 1–3 | Accepted |
 | [0003](0003-postgres-flyway.md) | PostgreSQL i Flyway od początku | Accepted (wdrożenie: T-005, T-006) |
 | [0004](0004-komunikacja-przez-zdarzenia.md) | Moduły komunikują się przez publiczne API i zdarzenia domenowe | Accepted |
-| [0005](0005-domena-bez-springa.md) | Domena bez zależności od Springa/JPA (porty i adaptery) | Accepted |
+| [0005](0005-domena-bez-springa.md) | Domena bez zależności od Springa/JPA (porty i adaptery) | Accepted (doprecyzowany przez 0009) |
 | [0006](0006-spring-boot-4.md) | Spring Boot 4.x zamiast 3.x z pierwotnego planu | Accepted |
 | [0007](0007-zrodlo-tenant-id.md) | `tenantId`: Filter → `TenantResolver` → `TenantContext`, przekazywany jawnie do domeny; Faza 1 = domyślny tenant z YAML | Accepted (wdrożenie: T-004) |
 | [0008](0008-uuid-v7-i-slug.md) | Tożsamość: UUIDv7 w typach domenowych. Czytelność: `slug` (tenant w MDC, diety w URL-ach) | Accepted (wdrożenie: T-004, T-006) |
+| [0009](0009-warstwa-application-i-transakcje.md) | Warstwa `application` (use case'y) jako granica transakcji; `@Transactional` jedyną zależnością od Springa | Accepted (wdrożenie: T-002) |
 
 ## Otwarte decyzje
 
