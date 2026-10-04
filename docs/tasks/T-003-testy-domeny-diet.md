@@ -13,7 +13,7 @@ Reguły biznesowe `DietPlan` i use case'ów są pokryte szybkimi testami jednost
 ## Kryteria akceptacji
 - [ ] Testy w `module-diet/src/test/kotlin/...` (moduł potrzebuje zależności testowych w `build.gradle.kts`).
 - [ ] Pokryte reguły: pusta nazwa jest odrzucana, `kcal <= 0` jest odrzucane, nowy plan ma stan `ACTIVE`.
-- [ ] `CreateDietPlanUseCase` i `GetDietPlansUseCase` są przetestowane z fake'owym repozytorium, w tym to, że `GetDietPlans` zwraca tylko plany danego tenanta.
+- [ ] `CreateDietPlanUseCase` i `ListDietPlanUseCase` są przetestowane z fake'owym repozytorium, w tym to, że `ListDietPlanUseCase` zwraca tylko plany danego tenanta.
 - [ ] `./gradlew :module-diet:test` przechodzi i trwa sekundy, nie dziesiątki sekund.
 
 ## Wskazówki

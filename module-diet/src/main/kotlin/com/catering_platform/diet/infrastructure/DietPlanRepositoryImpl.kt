@@ -11,26 +11,14 @@ class DietPlanRepositoryImpl(
     private val jpaRepository: DietPlanJpaRepository,
 ) : DietPlanRepository {
 
-    override fun save(dietPlan: DietPlan): DietPlan {
-        val entity = DietPlanEntity(
-            dietPlan.id.value,
-            UUID.randomUUID(),
-            dietPlan.name,
-            kcal = dietPlan.kcal,
-            state = dietPlan.state
-        )
-        jpaRepository.save(entity)
-        return dietPlan
-    }
+    override fun save(dietPlan: DietPlan): DietPlan =
+        DietPlanEntity.fromDomain(dietPlan)
+        .let { jpaRepository.save(it) }.toDietPlan()
 
-    override fun findById(id: DietPlanId): DietPlan? =
-        jpaRepository.findById(id.value).orElse(null)?.let {
-            DietPlan(
-                id = DietPlanId(it.id),
-                name = it.name,
-                tenantId = it.tenantId,
-                state = it.state,
-                kcal = it.kcal
-            )
-        }
+    override fun findByIdAndTenantId(id: DietPlanId, tenantId: UUID): DietPlan? =
+        jpaRepository.findByIdAndTenantId(id.value, tenantId)?.toDietPlan()
+
+    override fun findAllByTenantId(tenantId: UUID): List<DietPlan> =
+        jpaRepository.findAllByTenantId(tenantId)
+            .map { it.toDietPlan() }
 }

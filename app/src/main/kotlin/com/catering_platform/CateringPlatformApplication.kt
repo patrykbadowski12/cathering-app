@@ -13,5 +13,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 class CateringPlatformApplication
 
 fun main(args: Array<String>) {
-	runApplication<CateringPlatformApplication>()
+	runApplication<CateringPlatformApplication>(*args)
 }

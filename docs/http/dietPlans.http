@@ -1,0 +1,26 @@
+###
+# curl --location 'localhost:8080/api/v1/diet-plans'
+#--header 'Content-Type: application/json'
+#--data '{
+#    "name": "Dieta normalna",
+#    "kcal": 2000
+#}'
+POST localhost:8080/api/v1/diet-plans
+Content-Type: application/json
+
+{
+  "name": "Dieta normalna",
+  "kcal": 2000
+}
+
+###
+
+# curl --location 'localhost:8080/api/v1/diet-plans'
+GET localhost:8080/api/v1/diet-plans
+
+###
+
+# curl --location 'localhost:8080/api/v1/diet-plans/1df264d0-ec1a-4a7c-a0f8-9ef69b6f7a15'
+GET localhost:8080/api/v1/diet-plans/1df264d0-ec1a-4a7c-a0f8-9ef69b6f7a15
+
+###

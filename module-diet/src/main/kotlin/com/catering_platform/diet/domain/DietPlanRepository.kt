@@ -4,6 +4,6 @@ import java.util.UUID
 
 interface DietPlanRepository {
     fun save(dietPlan: DietPlan): DietPlan
-    fun findById(id: DietPlanId): DietPlan?
+    fun findByIdAndTenantId(id: DietPlanId, tenantId: UUID): DietPlan?
     fun findAllByTenantId(tenantId: UUID): List<DietPlan>
 }
