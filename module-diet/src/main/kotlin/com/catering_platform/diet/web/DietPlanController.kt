@@ -3,7 +3,6 @@ package com.catering_platform.diet.web
 import com.catering_platform.diet.application.CreateDietPlanUseCase
 import com.catering_platform.diet.application.GetDietPlanUseCase
 import com.catering_platform.diet.application.ListDietPlanUseCase
-import com.catering_platform.diet.domain.DietPlan
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
