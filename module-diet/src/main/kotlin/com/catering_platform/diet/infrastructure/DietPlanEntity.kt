@@ -3,6 +3,7 @@ package com.catering_platform.diet.infrastructure
 import com.catering_platform.diet.domain.DietPlan
 import com.catering_platform.diet.domain.DietPlanId
 import com.catering_platform.diet.domain.DietPlanState
+import com.catering_platform.shared.TenantId
 import jakarta.persistence.*
 import org.springframework.data.domain.Persistable
 import java.util.*
@@ -34,7 +35,7 @@ class DietPlanEntity(
         fun fromDomain(dietPlan: DietPlan): DietPlanEntity =
             DietPlanEntity(
                 id = dietPlan.id.value,
-                tenantId = dietPlan.tenantId,
+                tenantId = dietPlan.tenantId.value,
                 name = dietPlan.name,
                 kcal = dietPlan.kcal,
                 state = dietPlan.state
@@ -47,7 +48,7 @@ class DietPlanEntity(
             name = name,
             kcal = kcal,
             state = state,
-            tenantId = tenantId
+            tenantId = TenantId(tenantId)
         )
     }
 }

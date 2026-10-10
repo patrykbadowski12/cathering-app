@@ -1,5 +1,6 @@
 package com.catering_platform.diet.domain
 
+import com.catering_platform.shared.TenantId
 import java.util.UUID
 
 data class DietPlanId(val value: UUID)
@@ -7,12 +8,12 @@ data class DietPlanId(val value: UUID)
 data class DietPlan(
     val id: DietPlanId,
     val name: String,
-    val tenantId: UUID,
+    val tenantId: TenantId,
     val state: DietPlanState,
     val kcal: Int
 ) {
     companion object {
-        fun create(tenantId: UUID, name: String, kcal: Int): DietPlan {
+        fun create(tenantId: TenantId, name: String, kcal: Int): DietPlan {
             require(name.isNotBlank()) { "Diet plan name must not be blank" }
             require(kcal > 0) { "Diet plan kcal must be greater than zero" }
             return DietPlan(

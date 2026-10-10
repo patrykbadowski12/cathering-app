@@ -3,6 +3,8 @@ package com.catering_platform.diet.web
 import com.catering_platform.diet.application.CreateDietPlanUseCase
 import com.catering_platform.diet.application.GetDietPlanUseCase
 import com.catering_platform.diet.application.ListDietPlanUseCase
+import com.catering_platform.diet.domain.DietPlanId
+import com.catering_platform.shared.TenantId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -37,7 +39,7 @@ class DietPlanController(
         @RequestBody request: CreateDietPlanRequest,
         uriComponentsBuilder: UriComponentsBuilder
     ) =
-        createDietPlanUseCase.execute(TEMP_TENANT_ID, request.name, request.kcal)
+        createDietPlanUseCase.execute(TenantId(TEMP_TENANT_ID), request.name, request.kcal)
             .let { DietPlanResponse.fromDomain(it) }
             .let { ResponseEntity
                 .created(uriComponentsBuilder
@@ -49,13 +51,13 @@ class DietPlanController(
 
     @GetMapping
     fun list() =
-        listDietPlanUseCase.execute(TEMP_TENANT_ID)
+        listDietPlanUseCase.execute(TenantId(TEMP_TENANT_ID))
             .map { DietPlanResponse.fromDomain(it) }
             .let { ResponseEntity.ok(it) }
 
     @GetMapping("/{id}")
     fun get(@PathVariable("id" ) id: UUID): ResponseEntity<DietPlanResponse> =
-        getDietPlanUseCase.execute(id, TEMP_TENANT_ID)
+        getDietPlanUseCase.execute(DietPlanId(id), TenantId(TEMP_TENANT_ID))
             ?.let { DietPlanResponse.fromDomain(it) }
             ?.let { ResponseEntity.ok(it) }
             ?: ResponseEntity.notFound().build()

@@ -1,6 +1,6 @@
 # T-004 — `TenantContext` z domyślnym tenantem z YAML
 
-**Status:** TODO · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0007, 0008
+**Status:** IN PROGRESS · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0007, 0008
 
 ## Cel
 Każdy request HTTP ma ustawionego tenanta (w Fazie 1 zawsze domyślnego, z `application.yaml`), a `tenantId` przepływa jawnie: kontroler → use case → domena. Mechanizm jest gotowy na podmianę w Fazie 2, gdzie zmieni się tylko implementacja `TenantResolver`.
@@ -31,4 +31,12 @@ Każdy request HTTP ma ustawionego tenanta (w Fazie 1 zawsze domyślnego, z `app
 - Jak kontroler dostaje tenanta: `TenantContext.get()` wprost, czy własny argument metody (`HandlerMethodArgumentResolver`), np. `fun create(tenantId: TenantId, ...)`? Druga opcja jest ładniejsza i łatwiej ją testować. To dobre ćwiczenie, ale opcjonalne.
 
 ## Review
-_(uzupełnia Claude)_
+
+### Postęp — 2026-10-10 · gałąź `task/T-004-tenant-context` (kroki 1–2 zamknięte)
+- ✅ `TenantId` (value class, pole `value`) w `shared-kernel`. Domena, port, use case'y i fake używają `TenantId`, a `UUID` zostaje tylko w adapterze JPA (encja i `DietPlanRepositoryImpl`).
+- ✅ `GetDietPlanUseCase` przyjmuje `DietPlanId`, a konwersja odbywa się w kontrolerze.
+- ✅ `TenantContext` jako `object` z jednym prywatnym `ThreadLocal`, `get()` rzuca `NoTenantException` (`IllegalStateException`).
+  - Runda pośrednia: wersja z `class` i nowym `ThreadLocal` w `setTenant` gubiła tenanta przy dwóch równoległych wątkach (test wyścigu: `expected <TenantId> but was <null>`).
+- ✅ `TenantContextTest`: set/get, brak tenanta, set → clear → wyjątek, izolacja między wątkami, `@AfterEach clear`. Mutacja `clear() = Unit` jest łapana przez 2 testy.
+- ✅ `./gradlew build`: 17 testów zielonych (shared-kernel 4, module-diet 12, app 1).
+- ⏳ Kroki 3–6: properties, resolver, filtr, kontroler bez `TEMP_TENANT_ID`, MDC i testy filtra.

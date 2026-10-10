@@ -1,6 +1,8 @@
 package com.catering_platform.diet.application
 
 import com.catering_platform.diet.domain.DietPlan
+import com.catering_platform.diet.domain.DietPlanId
+import com.catering_platform.shared.TenantId
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.util.UUID
@@ -13,12 +15,12 @@ class GetDietPlanUseCaseTest {
     @Test
     fun `should find diet plan by id and tenantId`() {
         // given
-        val tenantId = UUID.randomUUID()
+        val tenantId = TenantId(UUID.randomUUID())
         val dietPlan = DietPlan.create(tenantId, "Test name", 10)
         inMemoryDietPlanRepository.save(dietPlan)
 
         // when
-        val result = getDietPlanUseCase.execute(dietPlan.id.value, tenantId)
+        val result = getDietPlanUseCase.execute(dietPlan.id, tenantId)
 
         // then
         assertEquals(dietPlan, result)
@@ -27,12 +29,12 @@ class GetDietPlanUseCaseTest {
     @Test
     fun `should not find diet for different tenantId`() {
         // given
-        val tenantId = UUID.randomUUID()
+        val tenantId = TenantId(UUID.randomUUID())
         val dietPlan = DietPlan.create(tenantId, "Test name", 10)
         inMemoryDietPlanRepository.save(dietPlan)
 
         // when
-        val result = getDietPlanUseCase.execute(dietPlan.id.value, UUID.randomUUID())
+        val result = getDietPlanUseCase.execute(dietPlan.id, TenantId(UUID.randomUUID()))
 
         // then
         assertNull(result)
@@ -42,7 +44,7 @@ class GetDietPlanUseCaseTest {
     fun `should not find diet plan by id`() {
 
         // when
-        val result = getDietPlanUseCase.execute(UUID.randomUUID(), UUID.randomUUID())
+        val result = getDietPlanUseCase.execute(DietPlanId(UUID.randomUUID()), TenantId(UUID.randomUUID()))
 
         // then
         assertNull(result)
