@@ -10,3 +10,12 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
 
+catering:
+  tenant:
+    default:
+      id: 01a126ba-571b-7528-b147-9e6c0cc32e7e
+      slug: testdieta
+
+logging:
+  pattern:
+    level: "%5p [tenant=%X{tenant:-none}]"

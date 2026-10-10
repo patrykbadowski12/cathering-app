@@ -1,6 +1,7 @@
 package com.catering_platform.diet.application
 
 import com.catering_platform.diet.domain.DietPlanState
+import com.catering_platform.shared.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -15,7 +16,7 @@ class CreateDietPlanUseCaseTest {
     @Test
     fun `should properly save diet plan`() {
         // given
-        val tenantId = UUID.randomUUID()
+        val tenantId = TenantId(UUID.randomUUID())
         val name = "Test name"
         val kcal = 10
 
@@ -34,7 +35,7 @@ class CreateDietPlanUseCaseTest {
     @Test
     fun `should not create diet plan if name is empty`() {
         // given
-        val tenantId = UUID.randomUUID()
+        val tenantId = TenantId(UUID.randomUUID())
         val name = "   "
         val kcal = 10
 

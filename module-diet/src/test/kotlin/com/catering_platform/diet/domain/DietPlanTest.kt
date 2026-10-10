@@ -1,5 +1,6 @@
 package com.catering_platform.diet.domain
 
+import com.catering_platform.shared.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -15,7 +16,7 @@ class DietPlanTest {
     @Test
     fun `should create a new DietPlan`() {
         // given
-        val tenantId = UUID.randomUUID()
+        val tenantId = TenantId(UUID.randomUUID())
 
         // when
         val result = DietPlan.create(tenantId, TEST_NAME, TEST_KCAL)
@@ -30,7 +31,7 @@ class DietPlanTest {
     @Test
     fun `should create a new DietPlan with 1 kcal`() {
         // given
-        val tenantId = UUID.randomUUID()
+        val tenantId = TenantId(UUID.randomUUID())
 
         // when
         val result = DietPlan.create(tenantId, TEST_NAME, 1)
@@ -46,7 +47,7 @@ class DietPlanTest {
     fun `should throw exception when name is empty`() {
         // given & when
         val exception = assertThrows<IllegalArgumentException> {
-            DietPlan.create(UUID.randomUUID(), "", TEST_KCAL)
+            DietPlan.create(TenantId(UUID.randomUUID()), "", TEST_KCAL)
         }
 
         // then
@@ -57,7 +58,7 @@ class DietPlanTest {
     fun `should throw exception when name is fake empty`() {
         // given & when
         val exception = assertThrows<IllegalArgumentException> {
-            DietPlan.create(UUID.randomUUID(), "      ", TEST_KCAL)
+            DietPlan.create(TenantId(UUID.randomUUID()), "      ", TEST_KCAL)
         }
 
         // then
@@ -68,7 +69,7 @@ class DietPlanTest {
     fun `should throw exception when kcal is negative value`() {
         // given & when
         val exception = assertThrows<IllegalArgumentException> {
-            DietPlan.create(UUID.randomUUID(), TEST_NAME, -1)
+            DietPlan.create(TenantId(UUID.randomUUID()), TEST_NAME, -1)
         }
 
         // then
@@ -79,7 +80,7 @@ class DietPlanTest {
     fun `should throw exception when kcal is zero`() {
         // given & when
         val exception = assertThrows<IllegalArgumentException> {
-            DietPlan.create(UUID.randomUUID(), TEST_NAME, 0)
+            DietPlan.create(TenantId(UUID.randomUUID()), TEST_NAME, 0)
         }
 
         // then

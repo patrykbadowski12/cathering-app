@@ -3,7 +3,7 @@ package com.catering_platform.diet.application
 import com.catering_platform.diet.domain.DietPlan
 import com.catering_platform.diet.domain.DietPlanId
 import com.catering_platform.diet.domain.DietPlanRepository
-import java.util.UUID
+import com.catering_platform.shared.TenantId
 
 class InMemoryDietPlanRepository : DietPlanRepository {
 
@@ -16,12 +16,12 @@ class InMemoryDietPlanRepository : DietPlanRepository {
 
     override fun findByIdAndTenantId(
         id: DietPlanId,
-        tenantId: UUID
+        tenantId: TenantId
     ): DietPlan? {
         return dietCollection[id]?.takeIf { it.tenantId == tenantId }
     }
 
-    override fun findAllByTenantId(tenantId: UUID): List<DietPlan> {
+    override fun findAllByTenantId(tenantId: TenantId): List<DietPlan> {
         return dietCollection
             .filter { (key, value) -> value.tenantId == tenantId }
             .values
