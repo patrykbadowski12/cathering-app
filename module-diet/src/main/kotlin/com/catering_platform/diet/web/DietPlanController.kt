@@ -4,14 +4,15 @@ import com.catering_platform.diet.application.CreateDietPlanUseCase
 import com.catering_platform.diet.application.GetDietPlanUseCase
 import com.catering_platform.diet.application.ListDietPlanUseCase
 import com.catering_platform.diet.domain.DietPlanId
-import com.catering_platform.shared.TenantId
+import com.catering_platform.shared.TenantContext
+import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.util.UriComponentsBuilder
 import java.util.UUID
 
@@ -29,18 +30,16 @@ class DietPlanController(
     private val getDietPlanUseCase: GetDietPlanUseCase
 ) {
 
-    companion object {
-        // todo T-004
-        val TEMP_TENANT_ID = UUID.fromString("6e8da2d0-5d92-4f4f-af95-97c0b93b8d1f")
-    }
+    private val logger = LoggerFactory.getLogger(DietPlanController::class.java)
 
     @PostMapping
     fun create(
         @RequestBody request: CreateDietPlanRequest,
         uriComponentsBuilder: UriComponentsBuilder
     ) =
-        createDietPlanUseCase.execute(TenantId(TEMP_TENANT_ID), request.name, request.kcal)
+        createDietPlanUseCase.execute(TenantContext.get(), request.name, request.kcal)
             .let { DietPlanResponse.fromDomain(it) }
+            .also { logger.info("Created dietPlan {}", it) }
             .let { ResponseEntity
                 .created(uriComponentsBuilder
                     .path("/api/v1/diet-plans/{id}")
@@ -51,13 +50,13 @@ class DietPlanController(
 
     @GetMapping
     fun list() =
-        listDietPlanUseCase.execute(TenantId(TEMP_TENANT_ID))
+        listDietPlanUseCase.execute(TenantContext.get())
             .map { DietPlanResponse.fromDomain(it) }
             .let { ResponseEntity.ok(it) }
 
     @GetMapping("/{id}")
     fun get(@PathVariable("id" ) id: UUID): ResponseEntity<DietPlanResponse> =
-        getDietPlanUseCase.execute(DietPlanId(id), TenantId(TEMP_TENANT_ID))
+        getDietPlanUseCase.execute(DietPlanId(id), TenantContext.get())
             ?.let { DietPlanResponse.fromDomain(it) }
             ?.let { ResponseEntity.ok(it) }
             ?: ResponseEntity.notFound().build()
