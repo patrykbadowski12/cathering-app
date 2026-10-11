@@ -1,8 +1,8 @@
 package com.cateringplatform.tenant
 
-import com.cateringplatform.shared.NoTenantException
-import com.cateringplatform.shared.TenantContext
-import com.cateringplatform.shared.TenantId
+import com.cateringplatform.shared.tenant.NoTenantException
+import com.cateringplatform.shared.tenant.TenantContext
+import com.cateringplatform.shared.tenant.TenantId
 import com.cateringplatform.tenant.TenantFilter.Companion.TENANT_KEY
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals

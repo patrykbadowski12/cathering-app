@@ -1,1 +1,3 @@
-// Pure Kotlin module (no Spring): plugins and shared dependencies are configured in the root build.gradle.kts.
+dependencies {
+    implementation("com.github.f4b6a3:uuid-creator:6.1.0")
+}

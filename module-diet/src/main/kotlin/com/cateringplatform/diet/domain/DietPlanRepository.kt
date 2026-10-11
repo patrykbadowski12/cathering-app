@@ -1,6 +1,6 @@
 package com.cateringplatform.diet.domain
 
-import com.cateringplatform.shared.TenantId
+import com.cateringplatform.shared.tenant.TenantId
 
 interface DietPlanRepository {
     fun save(dietPlan: DietPlan): DietPlan

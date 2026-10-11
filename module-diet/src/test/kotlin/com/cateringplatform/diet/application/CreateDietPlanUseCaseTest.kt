@@ -1,7 +1,7 @@
 package com.cateringplatform.diet.application
 
 import com.cateringplatform.diet.domain.DietPlanState
-import com.cateringplatform.shared.TenantId
+import com.cateringplatform.shared.tenant.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

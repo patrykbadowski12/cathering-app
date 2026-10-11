@@ -4,7 +4,7 @@ import com.cateringplatform.diet.application.CreateDietPlanUseCase
 import com.cateringplatform.diet.application.GetDietPlanUseCase
 import com.cateringplatform.diet.application.ListDietPlanUseCase
 import com.cateringplatform.diet.domain.DietPlanId
-import com.cateringplatform.shared.TenantContext
+import com.cateringplatform.shared.tenant.TenantContext
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

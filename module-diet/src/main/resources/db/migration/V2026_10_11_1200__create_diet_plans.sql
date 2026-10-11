@@ -1,13 +1,20 @@
-CREATE TABLE diet_plans(
-    id UUID PRIMARY KEY NOT NULL ,
-    tenant_id UUID NOT NULL,
-    name VARCHAR(200) NOT NULL ,
-    kcal INT NOT NULL CHECK (kcal > 0),
-    state VARCHAR(20) NOT NULL CHECK (state IN ('ACTIVE','INACTIVE')),
-    created_on TIMESTAMP    NOT NULL DEFAULT now(),
-    created_by VARCHAR,
-    modified_on TIMESTAMP,
-    modified_by VARCHAR
+CREATE TABLE diet_plans
+(
+    id          UUID         NOT NULL,
+    tenant_id   UUID         NOT NULL,
+    name        VARCHAR(200) NOT NULL,
+    kcal        INTEGER      NOT NULL,
+    state       VARCHAR(20)  NOT NULL,
+
+    created_on  TIMESTAMPTZ  NOT NULL,
+    created_by  VARCHAR(255) NOT NULL,
+    modified_on TIMESTAMPTZ,
+    modified_by VARCHAR(255),
+
+    CONSTRAINT pk_diet_plans PRIMARY KEY (id),
+    CONSTRAINT ck_diet_plans_kcal_positive CHECK (kcal > 0),
+    CONSTRAINT ck_diet_plans_name_not_blank CHECK (btrim(name) <> ''),
+    CONSTRAINT ck_diet_plans_state CHECK (state IN ('ACTIVE', 'INACTIVE'))
 );
 
-CREATE INDEX idx_diet_plans_tenant_id on diet_plans(tenant_id);
+CREATE INDEX idx_diet_plans_tenant_id ON diet_plans (tenant_id);

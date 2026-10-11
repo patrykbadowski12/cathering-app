@@ -1,6 +1,6 @@
 package com.cateringplatform.tenant
 
-import com.cateringplatform.shared.TenantContext
+import com.cateringplatform.shared.tenant.TenantContext
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

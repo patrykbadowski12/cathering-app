@@ -1,6 +1,6 @@
 # T-005 — PostgreSQL w Docker Compose
 
-**Status:** REVIEW · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0003 · **Wykonanie:** start własny, dokończenie Claude (zmiany niezacommitowane, do przejrzenia)
+**Status:** DONE · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0003 · **Wykonanie:** start własny, dokończenie Claude (zmiany niezacommitowane, do przejrzenia)
 
 ## Cel
 Aplikacja lokalnie działa na PostgreSQL uruchamianym jednym poleceniem. H2 znika.
@@ -68,3 +68,6 @@ Aplikacja lokalnie działa na PostgreSQL uruchamianym jednym poleceniem. H2 znik
 | Brak danych dostępowych w `application.yaml` | ✅ |
 | POST/GET działa, dane przetrwają restart | ✅ POST `201`, potem restart aplikacji **i** `docker compose down` + `up` (bez `-v`), a GET pod adres z `Location` → `200` z tym samym planem |
 | `./gradlew build` | ✅ 19 testów; `contextLoads` łączy się z `jdbc:postgresql://localhost:5432/catering_database` |
+
+### Zamknięcie — 2026-10-11 → **DONE**
+Zmergowane w PR #5.

@@ -27,7 +27,7 @@ class IdsTest {
 
     @Test
     fun `should keep creation order when compared as strings`() {
-        // given: Postgres sorts uuid columns byte by byte, which matches the order of the text form
+        // given
         val first = Ids.uuidV7()
         val second = Ids.uuidV7()
 

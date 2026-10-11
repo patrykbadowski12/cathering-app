@@ -3,7 +3,7 @@ package com.cateringplatform.diet.infrastructure
 import com.cateringplatform.diet.domain.DietPlan
 import com.cateringplatform.diet.domain.DietPlanId
 import com.cateringplatform.diet.domain.DietPlanState
-import com.cateringplatform.shared.TenantId
+import com.cateringplatform.shared.tenant.TenantId
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated

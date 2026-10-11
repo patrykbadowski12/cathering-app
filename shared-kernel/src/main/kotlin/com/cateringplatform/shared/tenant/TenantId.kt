@@ -1,4 +1,4 @@
-package com.cateringplatform.shared
+package com.cateringplatform.shared.tenant
 
 import java.util.UUID
 

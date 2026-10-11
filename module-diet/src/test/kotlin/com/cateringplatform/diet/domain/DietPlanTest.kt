@@ -1,6 +1,6 @@
 package com.cateringplatform.diet.domain
 
-import com.cateringplatform.shared.TenantId
+import com.cateringplatform.shared.tenant.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -63,6 +63,29 @@ class DietPlanTest {
 
         // then
         assertEquals("Diet plan name must not be blank", exception.message)
+    }
+
+    @Test
+    fun `should create a new DietPlan with name of max length`() {
+        // given
+        val name = "a".repeat(DietPlan.MAX_NAME_LENGTH)
+
+        // when
+        val result = DietPlan.create(TenantId(UUID.randomUUID()), name, TEST_KCAL)
+
+        // then
+        assertEquals(name, result.name)
+    }
+
+    @Test
+    fun `should throw exception when name is longer than max length`() {
+        // given & when
+        val exception = assertThrows<IllegalArgumentException> {
+            DietPlan.create(TenantId(UUID.randomUUID()), "a".repeat(DietPlan.MAX_NAME_LENGTH + 1), TEST_KCAL)
+        }
+
+        // then
+        assertEquals("Diet plan name must be at most 200 characters", exception.message)
     }
 
     @Test
