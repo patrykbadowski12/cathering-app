@@ -48,7 +48,7 @@ Styl kodu jest sprawdzany automatycznie: `./gradlew build` pada przy naruszeniu 
 
 **Decyzje warte zapamiętania:**
 - **`ij_kotlin_packages_to_use_import_on_demand =` (pusta wartość), a nie `unset`.** Przy `unset` ktlint zachowuje domyślną listę wyjątków, w której jest `java.util.*`, więc pierwszy test z `import java.util.*` przechodził. Pusta wartość blokuje wszystkie wildcardy. Ostrzejsza reguła od razu znalazła ukryty `java.util.*` w `CreateDietPlanUseCaseTest`.
-- **Reguła `package-name` wyłączona.** Pakiet bazowy `com.catering_platform` ma podkreślenie, którego konwencja Kotlina nie lubi. Zmiana nazwy pakietu to refaktor całego projektu, a nie formatowanie. Jeśli kiedyś zechcesz, to osobne zadanie.
+- **Pakiet bazowy przemianowany:** `com.catering_platform` → `com.cateringplatform` (konwencja: same małe litery, bez podkreśleń), na prośbę z 2026-10-11. Reguła `package-name` jest znowu włączona. Zmienione: katalogi źródeł, deklaracje `package` i importy, `basePackages` w `CateringPlatformApplication` oraz `group` w `build.gradle.kts`. Zweryfikowane czystym buildem (19 testów) i `bootRun` (POST `201`, GET `200`, log z tenantem).
 
 **Weryfikacja:**
 - `./gradlew build` ✅, 19 testów zielonych.

@@ -16,7 +16,7 @@ plugins {
 val ktlintVersion = "1.8.0"
 
 allprojects {
-    group = "com.catering_platform"
+    group = "com.cateringplatform"
     version = "0.0.1-SNAPSHOT"
 
     repositories {
