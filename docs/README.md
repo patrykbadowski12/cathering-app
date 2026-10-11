@@ -42,6 +42,18 @@ git switch main && git pull                     # wracasz na zaktualizowany main
 - **Review:** Claude czyta diff gałęzi względem `main` (`git diff main...task/T-NNN-...`), a uwagi trafiają do pliku zadania.
 - **Merge:** *Squash and merge*, czyli jedno zadanie = jeden commit na `main`. Historia `main` jest czytelna, a na gałęzi możesz commitować „brudno”.
 
+## Styl kodu (ktlint)
+
+Reguły są w `.editorconfig` (czyta je i IntelliJ, i ktlint). `./gradlew build` sprawdza styl i **pada** przy naruszeniu, np. przy wildcard imporcie.
+
+```bash
+./gradlew ktlintFormat   # naprawia automatycznie wszystko, co się da (uruchom przed commitem)
+./gradlew ktlintCheck    # tylko sprawdza, bez zmian w plikach
+```
+
+- Czego `ktlintFormat` nie naprawi sam (np. `import foo.*`), pokaże z numerem linii. To trzeba poprawić ręcznie.
+- IntelliJ: po zmianie `.editorconfig` zrób *File → Reload All from Disk* albo zrestartuj IDE. *Reformat Code* i *Optimize Imports* używają wtedy tych samych reguł i nie tworzą wildcardów.
+
 ## Zasady zadań
 
 - **Małe, ale z celem.** Każde zadanie kończy się czymś, co działa albo czymś, co zostało zdecydowane, a nie „połową refaktoru”.
