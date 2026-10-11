@@ -1,0 +1,23 @@
+# Local development database. Start: `docker compose up -d`, stop: `docker compose down`
+# (add `-v` to also delete the data volume).
+services:
+  postgres:
+    image: postgres:18.6-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: catering_database
+      POSTGRES_USER: testUser
+      POSTGRES_PASSWORD: "1234567890!" # local dev only, never reuse elsewhere
+    volumes:
+      # Postgres 18+ images keep data in a version-specific subdirectory,
+      # so the volume is mounted at /var/lib/postgresql (not .../data).
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testUser -d catering_database"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres-data:

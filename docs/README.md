@@ -42,6 +42,20 @@ git switch main && git pull                     # wracasz na zaktualizowany main
 - **Review:** Claude czyta diff gałęzi względem `main` (`git diff main...task/T-NNN-...`), a uwagi trafiają do pliku zadania.
 - **Merge:** *Squash and merge*, czyli jedno zadanie = jeden commit na `main`. Historia `main` jest czytelna, a na gałęzi możesz commitować „brudno”.
 
+## Uruchomienie lokalne
+
+Wymagany jest Docker (Docker Desktop z WSL2 na Windows).
+
+```bash
+docker compose up -d          # PostgreSQL z compose.yaml (dane w wolumenie "postgres-data")
+./gradlew :app:bootRun        # domyślnie z profilem "local" (application-local.yaml)
+docker compose down           # zatrzymanie bazy; dane zostają
+docker compose down -v        # zatrzymanie + skasowanie danych
+```
+
+- **IntelliJ:** w konfiguracji uruchomieniowej ustaw profil `local`. W konfiguracji typu *Spring Boot* jest pole *Active profiles*. W zwykłej konfiguracji Kotlin dodaj opcję VM `-Dspring.profiles.active=local`. Bez profilu aplikacja nie wystartuje, bo w `application.yaml` celowo nie ma danych dostępowych do bazy.
+- **Testy:** do czasu T-007 (Testcontainers) `./gradlew build` wymaga działającej bazy (`docker compose up -d`), bo `CateringPlatformApplicationTests` startuje pełny kontekst z profilem `local`.
+
 ## Styl kodu (ktlint)
 
 Reguły są w `.editorconfig` (czyta je i IntelliJ, i ktlint). `./gradlew build` sprawdza styl i **pada** przy naruszeniu, np. przy wildcard imporcie.
