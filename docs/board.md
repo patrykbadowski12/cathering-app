@@ -17,6 +17,8 @@ Cel etapu: stabilna baza (repo, kompilacja, prawdziwa baza danych, migracje, tes
 | [T-007](tasks/T-007-test-repozytorium-testcontainers.md) | Test integracyjny repozytorium z Testcontainers | TODO | T-006 |
 | [T-008](tasks/T-008-granice-modulow.md) | Decyzja i implementacja: wymuszenie granic modułów | TODO | T-002 |
 | [T-009](tasks/T-009-wspolna-persystencja.md) | `AuditableEntity` we wspólnym miejscu | TODO | T-008 |
+| [T-010](tasks/T-010-ktlint.md) | ktlint i `.editorconfig`: jeden styl, bez wildcard importów | DONE | — |
+| [T-011](tasks/T-011-testy-web-i-konfiguracji.md) | Testy warstwy web (`@WebMvcTest`) i konfiguracji tenanta | TODO | T-004 |
 
 ## Epiki na później (rozpisujemy, gdy dojdziemy)
 

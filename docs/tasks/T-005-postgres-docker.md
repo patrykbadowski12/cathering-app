@@ -19,7 +19,12 @@ Aplikacja lokalnie działa na PostgreSQL uruchamianym jednym poleceniem. H2 znik
 
 ## Wskazówki
 - Na tym etapie Hibernate jeszcze tworzy schemat (`ddl-auto: update`). To tymczasowe i znika w T-006.
-- Na Windows sprawdź, czy Docker Desktop działa z backendem WSL2.
+- **Pułapka:** dla H2 Spring Boot domyślnie ustawia `ddl-auto: create-drop`, ale dla „prawdziwej” bazy domyślnie jest `none`. Po przejściu na Postgresa tabele **nie powstaną same**, dopóki nie ustawisz `update` jawnie.
+- **Pułapka:** `CateringPlatformApplicationTests.contextLoads` startuje pełny kontekst, więc po usunięciu H2 będzie potrzebował działającej bazy. Między T-005 a T-007 (Testcontainers) `./gradlew build` wymaga `docker compose up`. Zdecyduj świadomie: zaakceptować to przejściowo (i zapisać w README) albo przenieść sam `contextLoads` na Testcontainers już teraz.
+- Na Windows sprawdź, czy Docker Desktop działa z backendem WSL2 (`docker compose version` powinno działać w terminalu).
+- Nazwy w `compose.yaml` (baza, użytkownik, hasło) i w profilu `local` muszą się zgadzać. Hasło dev w `compose.yaml` jest OK, bo to lokalna baza, ale **nie** w `application.yaml`, który kiedyś trafi na produkcję.
+- Healthcheck w compose (`pg_isready`) przyda się później, gdy coś będzie czekać na gotową bazę.
+- Sprawdzenie, że dane przetrwały: POST → restart aplikacji (nie kontenera) → GET. Potem `docker compose down` i `up` (bez `-v`), czyli test wolumenu.
 
 ## Review
 _(uzupełnia Claude)_
