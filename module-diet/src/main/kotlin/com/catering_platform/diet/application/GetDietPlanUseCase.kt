@@ -7,10 +7,7 @@ import com.catering_platform.shared.TenantId
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional(readOnly = true)
-class GetDietPlanUseCase(
-    private val repository: DietPlanRepository
-) {
-    fun execute(dietPlanId: DietPlanId, tenantId: TenantId): DietPlan? {
-        return repository.findByIdAndTenantId(dietPlanId, tenantId)
-    }
+class GetDietPlanUseCase(private val repository: DietPlanRepository) {
+    fun execute(dietPlanId: DietPlanId, tenantId: TenantId): DietPlan? =
+        repository.findByIdAndTenantId(dietPlanId, tenantId)
 }

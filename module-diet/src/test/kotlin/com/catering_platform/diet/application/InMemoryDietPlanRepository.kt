@@ -14,17 +14,11 @@ class InMemoryDietPlanRepository : DietPlanRepository {
         return dietPlan
     }
 
-    override fun findByIdAndTenantId(
-        id: DietPlanId,
-        tenantId: TenantId
-    ): DietPlan? {
-        return dietCollection[id]?.takeIf { it.tenantId == tenantId }
-    }
+    override fun findByIdAndTenantId(id: DietPlanId, tenantId: TenantId): DietPlan? =
+        dietCollection[id]?.takeIf { it.tenantId == tenantId }
 
-    override fun findAllByTenantId(tenantId: TenantId): List<DietPlan> {
-        return dietCollection
-            .filter { (key, value) -> value.tenantId == tenantId }
-            .values
-            .toList()
-    }
+    override fun findAllByTenantId(tenantId: TenantId): List<DietPlan> = dietCollection
+        .filter { (key, value) -> value.tenantId == tenantId }
+        .values
+        .toList()
 }

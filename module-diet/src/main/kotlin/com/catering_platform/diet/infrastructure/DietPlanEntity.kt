@@ -4,9 +4,16 @@ import com.catering_platform.diet.domain.DietPlan
 import com.catering_platform.diet.domain.DietPlanId
 import com.catering_platform.diet.domain.DietPlanState
 import com.catering_platform.shared.TenantId
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.Id
+import jakarta.persistence.PostLoad
+import jakarta.persistence.PostPersist
+import jakarta.persistence.Table
+import jakarta.persistence.Transient
 import org.springframework.data.domain.Persistable
-import java.util.*
+import java.util.UUID
 
 @Entity
 @Table(name = "diet_plans")
@@ -18,7 +25,8 @@ class DietPlanEntity(
     val kcal: Int,
     @Enumerated(EnumType.STRING)
     val state: DietPlanState,
-) : AuditableEntity(), Persistable<UUID> {
+) : AuditableEntity(),
+    Persistable<UUID> {
 
     @Transient
     private var newEntity: Boolean = true
@@ -32,23 +40,20 @@ class DietPlanEntity(
         newEntity = false
     }
     companion object {
-        fun fromDomain(dietPlan: DietPlan): DietPlanEntity =
-            DietPlanEntity(
-                id = dietPlan.id.value,
-                tenantId = dietPlan.tenantId.value,
-                name = dietPlan.name,
-                kcal = dietPlan.kcal,
-                state = dietPlan.state
-            )
-    }
-
-    fun toDietPlan(): DietPlan {
-        return DietPlan(
-            id = DietPlanId(id),
-            name = name,
-            kcal = kcal,
-            state = state,
-            tenantId = TenantId(tenantId)
+        fun fromDomain(dietPlan: DietPlan): DietPlanEntity = DietPlanEntity(
+            id = dietPlan.id.value,
+            tenantId = dietPlan.tenantId.value,
+            name = dietPlan.name,
+            kcal = dietPlan.kcal,
+            state = dietPlan.state,
         )
     }
+
+    fun toDietPlan(): DietPlan = DietPlan(
+        id = DietPlanId(id),
+        name = name,
+        kcal = kcal,
+        state = state,
+        tenantId = TenantId(tenantId),
+    )
 }

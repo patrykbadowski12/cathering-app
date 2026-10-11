@@ -71,5 +71,4 @@ class TenantContextTest {
         assertIs<NoTenantException>(thrown)
         assertEquals(tenantId, TenantContext.get())
     }
-
 }

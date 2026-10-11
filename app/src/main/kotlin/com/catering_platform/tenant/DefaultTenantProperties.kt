@@ -4,5 +4,5 @@ import java.util.UUID
 
 data class DefaultTenantProperties(
     val id: UUID,
-    val slug: String
+    val slug: String,
 )

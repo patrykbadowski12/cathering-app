@@ -12,9 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 10) // filter must be invoked before spring security -100
-class TenantFilter(
-    private val tenantResolver: TenantResolver
-) : OncePerRequestFilter() {
+class TenantFilter(private val tenantResolver: TenantResolver) : OncePerRequestFilter() {
 
     companion object {
         const val TENANT_KEY = "tenant"
@@ -23,7 +21,7 @@ class TenantFilter(
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain
+        filterChain: FilterChain,
     ) {
         val resolvedTenant = tenantResolver.resolveTenant(request)
         TenantContext.set(resolvedTenant.id)

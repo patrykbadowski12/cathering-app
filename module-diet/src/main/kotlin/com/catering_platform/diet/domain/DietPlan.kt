@@ -10,7 +10,7 @@ data class DietPlan(
     val name: String,
     val tenantId: TenantId,
     val state: DietPlanState,
-    val kcal: Int
+    val kcal: Int,
 ) {
     companion object {
         fun create(tenantId: TenantId, name: String, kcal: Int): DietPlan {
@@ -21,7 +21,7 @@ data class DietPlan(
                 name = name,
                 kcal = kcal,
                 state = DietPlanState.ACTIVE,
-                tenantId = tenantId
+                tenantId = tenantId,
             )
         }
     }

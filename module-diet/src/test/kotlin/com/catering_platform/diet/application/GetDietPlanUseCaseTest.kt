@@ -3,7 +3,8 @@ package com.catering_platform.diet.application
 import com.catering_platform.diet.domain.DietPlan
 import com.catering_platform.diet.domain.DietPlanId
 import com.catering_platform.shared.TenantId
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
@@ -42,12 +43,10 @@ class GetDietPlanUseCaseTest {
 
     @Test
     fun `should not find diet plan by id`() {
-
         // when
         val result = getDietPlanUseCase.execute(DietPlanId(UUID.randomUUID()), TenantId(UUID.randomUUID()))
 
         // then
         assertNull(result)
     }
-
 }

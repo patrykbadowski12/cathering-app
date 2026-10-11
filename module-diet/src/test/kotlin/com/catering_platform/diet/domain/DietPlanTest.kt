@@ -73,7 +73,7 @@ class DietPlanTest {
         }
 
         // then
-        assertEquals("Diet plan kcal must be greater than zero" ,exception.message)
+        assertEquals("Diet plan kcal must be greater than zero", exception.message)
     }
 
     @Test
@@ -84,6 +84,6 @@ class DietPlanTest {
         }
 
         // then
-        assertEquals("Diet plan kcal must be greater than zero" ,exception.message)
+        assertEquals("Diet plan kcal must be greater than zero", exception.message)
     }
 }

@@ -33,8 +33,8 @@ class TenantFilterTest {
         // given
         val mockHttpServletRequest = MockHttpServletRequest()
         val mockHttpServletResponse = MockHttpServletResponse()
-        var tenantId : TenantId? = null
-        var mdcTenantSlug : String? = null
+        var tenantId: TenantId? = null
+        var mdcTenantSlug: String? = null
 
         // when
         tenantFilter.doFilter(mockHttpServletRequest, mockHttpServletResponse, { _, _ ->

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.util.*
+import java.util.UUID
 
 class CreateDietPlanUseCaseTest {
 
@@ -48,5 +48,4 @@ class CreateDietPlanUseCaseTest {
         val result = inMemoryDietPlanRepository.findAllByTenantId(tenantId)
         assertTrue(result.isEmpty())
     }
-
 }

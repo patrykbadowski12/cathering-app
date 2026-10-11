@@ -4,5 +4,5 @@ import com.catering_platform.shared.TenantId
 
 data class ResolvedTenant(
     val id: TenantId,
-    val slug: String
+    val slug: String,
 )

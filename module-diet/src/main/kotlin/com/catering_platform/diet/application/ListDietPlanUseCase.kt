@@ -6,10 +6,6 @@ import com.catering_platform.shared.TenantId
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional(readOnly = true)
-class ListDietPlanUseCase(
-    private val repository: DietPlanRepository
-) {
-    fun execute(tenantId: TenantId): List<DietPlan> {
-        return repository.findAllByTenantId(tenantId)
-    }
+class ListDietPlanUseCase(private val repository: DietPlanRepository) {
+    fun execute(tenantId: TenantId): List<DietPlan> = repository.findAllByTenantId(tenantId)
 }
