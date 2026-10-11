@@ -1,4 +1,4 @@
-package com.cateringplatform.shared
+package com.cateringplatform.shared.tenant
 
 object TenantContext {
     private val current = ThreadLocal<TenantId>()

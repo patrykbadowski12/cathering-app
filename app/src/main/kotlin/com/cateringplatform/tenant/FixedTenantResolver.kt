@@ -1,6 +1,6 @@
 package com.cateringplatform.tenant
 
-import com.cateringplatform.shared.TenantId
+import com.cateringplatform.shared.tenant.TenantId
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Component
 

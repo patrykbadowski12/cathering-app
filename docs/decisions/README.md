@@ -15,6 +15,7 @@ Format: krótki kontekst, decyzja i konsekwencje. Wzorzec: Michael Nygard, „Do
 | [0007](0007-zrodlo-tenant-id.md) | `tenantId`: Filter → `TenantResolver` → `TenantContext`, przekazywany jawnie do domeny; Faza 1 = domyślny tenant z YAML | Accepted (wdrożenie: T-004) |
 | [0008](0008-uuid-v7-i-slug.md) | Tożsamość: UUIDv7 w typach domenowych. Czytelność: `slug` (tenant w MDC, diety w URL-ach) | Accepted (wdrożenie: T-004, T-006) |
 | [0009](0009-warstwa-application-i-transakcje.md) | Warstwa `application` (use case'y) jako granica transakcji; `@Transactional` jedyną zależnością od Springa | Accepted (wdrożenie: T-002) |
+| [0010](0010-migracje-w-modulach.md) | Migracje Flyway w module-właścicielu, wersje datowe `V<yyyy>_<MM>_<dd>_<HHmm>__` | Accepted (wdrożenie: T-006) |
 
 ## Otwarte decyzje
 

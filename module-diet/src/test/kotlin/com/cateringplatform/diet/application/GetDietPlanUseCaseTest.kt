@@ -2,7 +2,7 @@ package com.cateringplatform.diet.application
 
 import com.cateringplatform.diet.domain.DietPlan
 import com.cateringplatform.diet.domain.DietPlanId
-import com.cateringplatform.shared.TenantId
+import com.cateringplatform.shared.tenant.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
