@@ -1,0 +1,6 @@
+# Local development: database from compose.yaml (`docker compose up -d`).
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/catering_database
+    username: testUser
+    password: "1234567890!"

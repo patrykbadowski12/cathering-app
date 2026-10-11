@@ -12,7 +12,7 @@ Cel etapu: stabilna baza (repo, kompilacja, prawdziwa baza danych, migracje, tes
 | [T-002](tasks/T-002-sciezka-diet-dziala.md) | Projekt się kompiluje, POST/GET `/diet-plans` działa | DONE | T-001 |
 | [T-003](tasks/T-003-testy-domeny-diet.md) | Testy jednostkowe domeny `DietPlan` | DONE | T-002 |
 | [T-004](tasks/T-004-tenant-context.md) | `TenantContext` z domyślnym tenantem z YAML (ADR 0007) | DONE | T-002 |
-| [T-005](tasks/T-005-postgres-docker.md) | PostgreSQL w Docker Compose | TODO | T-002 |
+| [T-005](tasks/T-005-postgres-docker.md) | PostgreSQL w Docker Compose | REVIEW | T-002 |
 | [T-006](tasks/T-006-flyway.md) | Flyway: pierwsza migracja i `ddl-auto: validate` | TODO | T-005 |
 | [T-007](tasks/T-007-test-repozytorium-testcontainers.md) | Test integracyjny repozytorium z Testcontainers | TODO | T-006 |
 | [T-008](tasks/T-008-granice-modulow.md) | Decyzja i implementacja: wymuszenie granic modułów | TODO | T-002 |
