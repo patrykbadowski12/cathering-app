@@ -27,6 +27,9 @@ ij_kotlin_allow_trailing_comma_on_call_site = true
 [*.{yml,yaml}]
 indent_size = 2
 
+[*.{ts,tsx,js,jsx,mjs,cjs,json,css,html}]
+indent_size = 2
+
 [*.md]
 trim_trailing_whitespace = false
 
