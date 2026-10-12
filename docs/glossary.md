@@ -11,3 +11,6 @@ Te same słowa w rozmowie, w kodzie i w bazie. Jeśli nazwa w kodzie różni si�
 | Zamówienie | _do ustalenia (E3)_ | Zakup planu przez klienta końcowego na określony okres |
 | Klient końcowy | _do ustalenia_ | Osoba zamawiająca jedzenie u cateringu (nie nasz klient!) |
 | Właściciel | _do ustalenia (E4)_ | Osoba zarządzająca tenantem w panelu, czyli nasz płacący klient |
+| Sklep | `/`, `/api/v1/shop` | Publiczna część strony tenanta dla klienta końcowego: diety, jadłospis, zgłoszenie zamówienia (ADR 0012) |
+| Panel | `/admin`, `/api/v1/admin` | Część strony tenanta dla zalogowanego właściciela: zamówienia, lista produkcyjna, diety, jadłospisy (ADR 0012) |
+| Lista produkcyjna | _do ustalenia (E5)_ | Zestawienie na dany dzień: ile jakich posiłków przygotować, wyliczone z zamówień i jadłospisu |

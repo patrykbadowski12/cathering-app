@@ -2,11 +2,10 @@ package com.cateringplatform
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
+import org.springframework.context.annotation.Import
 
-// TODO(T-007): switch to Testcontainers so the build no longer needs `docker compose up`.
 @SpringBootTest
-@ActiveProfiles("local")
+@Import(TestcontainersConfiguration::class)
 class CateringPlatformApplicationTests {
     @Test
     fun contextLoads() {

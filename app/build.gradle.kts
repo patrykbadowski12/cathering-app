@@ -15,10 +15,10 @@ dependencies {
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.testcontainers:testcontainers-postgresql")
 }
 
-// `./gradlew :app:bootRun` uses the local profile (database from compose.yaml) unless
-// another profile is passed explicitly, e.g. `--args='--spring.profiles.active=other'`.
 tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
     systemProperty("spring.profiles.active", System.getProperty("spring.profiles.active") ?: "local")
 }

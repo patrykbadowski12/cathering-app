@@ -16,6 +16,8 @@ Format: krótki kontekst, decyzja i konsekwencje. Wzorzec: Michael Nygard, „Do
 | [0008](0008-uuid-v7-i-slug.md) | Tożsamość: UUIDv7 w typach domenowych. Czytelność: `slug` (tenant w MDC, diety w URL-ach) | Accepted (wdrożenie: T-004, T-006) |
 | [0009](0009-warstwa-application-i-transakcje.md) | Warstwa `application` (use case'y) jako granica transakcji; `@Transactional` jedyną zależnością od Springa | Accepted (wdrożenie: T-002) |
 | [0010](0010-migracje-w-modulach.md) | Migracje Flyway w module-właścicielu, wersje datowe `V<yyyy>_<MM>_<dd>_<HHmm>__` | Accepted (wdrożenie: T-006) |
+| [0011](0011-frontend-spa-react.md) | Frontend: SPA React + TypeScript w `frontend/`, ten sam origin co API, klient generowany z OpenAPI; SSR sklepu (Next.js) odłożone | Accepted |
+| [0012](0012-uklad-adresow-sklep-panel-api.md) | Jedna domena per tenant: `/` sklep, `/admin` panel, API rozdzielone na `/api/v1/shop` (publiczne) i `/api/v1/admin` (sesja właściciela) | Accepted |
 
 ## Otwarte decyzje
 
@@ -24,4 +26,4 @@ Format: krótki kontekst, decyzja i konsekwencje. Wzorzec: Michael Nygard, „Do
 | Rozpoznawanie tenanta w Fazie 2 (host, własne domeny, panel, proxy) | kierunek opisany w ADR 0007, do potwierdzenia | Faza 2 |
 | Jak wymusić granice modułów? | Gradle submoduły `domain/infra/web` / ArchUnit / Spring Modulith | T-008 |
 | Gdzie żyje kod wspólny dla persystencji (`AuditableEntity`)? | `shared-kernel` / osobny moduł `shared-infrastructure` | T-009 |
-| REST + osobny frontend czy Thymeleaf SSR dla sklepu? | plan mówi Thymeleaf; `DietPlanController` jest REST | E1/E4 |
+| Deploy frontu: pliki serwowane przez Spring czy S3 + CloudFront? | ADR 0011 zostawia otwarte | E6 (CI/CD) |

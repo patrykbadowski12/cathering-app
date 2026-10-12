@@ -54,7 +54,7 @@ docker compose down -v        # zatrzymanie + skasowanie danych
 ```
 
 - **IntelliJ:** w konfiguracji uruchomieniowej ustaw profil `local`. W konfiguracji typu *Spring Boot* jest pole *Active profiles*. W zwykłej konfiguracji Kotlin dodaj opcję VM `-Dspring.profiles.active=local`. Bez profilu aplikacja nie wystartuje, bo w `application.yaml` celowo nie ma danych dostępowych do bazy.
-- **Testy:** do czasu T-007 (Testcontainers) `./gradlew build` wymaga działającej bazy (`docker compose up -d`), bo `CateringPlatformApplicationTests` startuje pełny kontekst z profilem `local`.
+- **Testy:** `./gradlew build` nie potrzebuje `docker compose`. Testy integracyjne same stawiają Postgresa przez Testcontainers (ten sam obraz co w `compose.yaml`, losowy port), więc wymagają tylko działającego Dockera.
 
 ## Styl kodu (ktlint)
 
