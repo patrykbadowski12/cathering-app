@@ -51,7 +51,11 @@ docker compose up -d          # PostgreSQL z compose.yaml (dane w wolumenie "pos
 ./gradlew :app:bootRun        # domyślnie z profilem "local" (application-local.yaml)
 docker compose down           # zatrzymanie bazy; dane zostają
 docker compose down -v        # zatrzymanie + skasowanie danych
+
+cd frontend && npm ci && npm run dev   # sklep na http://localhost:5173 (wymaga Node >= 22.12)
 ```
+
+- **Front:** otwierasz `http://localhost:5173`. Vite serwuje stronę i przekazuje `/api/*` do Springa na `:8080`, więc dla przeglądarki to jedna domena (ADR 0011). Szczegóły w `frontend/README.md`.
 
 - **IntelliJ:** w konfiguracji uruchomieniowej ustaw profil `local`. W konfiguracji typu *Spring Boot* jest pole *Active profiles*. W zwykłej konfiguracji Kotlin dodaj opcję VM `-Dspring.profiles.active=local`. Bez profilu aplikacja nie wystartuje, bo w `application.yaml` celowo nie ma danych dostępowych do bazy.
 - **Testy:** `./gradlew build` nie potrzebuje `docker compose`. Testy integracyjne same stawiają Postgresa przez Testcontainers (ten sam obraz co w `compose.yaml`, losowy port), więc wymagają tylko działającego Dockera.

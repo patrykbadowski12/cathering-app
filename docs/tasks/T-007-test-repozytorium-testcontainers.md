@@ -1,6 +1,6 @@
 # T-007 — Test integracyjny repozytorium z Testcontainers
 
-**Status:** REVIEW · **Etap:** 0 · **Zależy od:** T-006 · **Wykonanie:** Claude (na prośbę)
+**Status:** DONE · **Etap:** 0 · **Zależy od:** T-006 · **Wykonanie:** Claude (na prośbę)
 
 ## Cel
 Adapter `DietPlanRepositoryImpl` jest przetestowany na prawdziwym PostgreSQL, z migracjami Flyway uruchamianymi w teście.
@@ -87,3 +87,6 @@ Adapter `DietPlanRepositoryImpl` jest przetestowany na prawdziwym PostgreSQL, z 
 - Tag obrazu `postgres:18.6-alpine` jest w trzech miejscach (`compose.yaml` + dwie konfiguracje testowe). Przy podbijaniu wersji zmień wszystkie.
 
 **Do posprzątania poza tym zadaniem:** `module-diet` i `module-order` nadal mają `spring-boot-starter-thymeleaf`, a po ADR 0011 nie ma już szablonów po stronie serwera. Do usunięcia, np. w T-013.
+
+### Zamknięcie — 2026-10-12 → **DONE**
+Zmergowane w PR #7.
