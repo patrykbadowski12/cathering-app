@@ -11,7 +11,13 @@ Backend publikuje opis swojego API w formacie OpenAPI. To źródło prawdy dla f
 - Swagger UI jako narzędzie developerskie.
 
 ## Kryteria akceptacji
-- [ ] `GET /v3/api-docs` zwraca specyfikację OpenAPI z endpointami `diet-plans`.
+- [ ] **Najpierw podział ścieżek wg ADR 0012**, zanim front wygeneruje z kontraktu klienta:
+  - `GET /api/v1/shop/diet-plans` (lista) i `GET /api/v1/shop/diet-plans/{id}`, czyli publiczne odczyty,
+  - `POST /api/v1/admin/diet-plans`, czyli zarządzanie. Nagłówek `Location` wskazuje na zasób w `admin`.
+
+  Ten sam use case jest wołany z dwóch kontrolerów (adapterów), osobnych dla `shop` i `admin`. Zaktualizuj `docs/http/dietPlans.http`.
+- [ ] Usunięte `spring-boot-starter-thymeleaf` z `module-diet` i `module-order` (ADR 0011: brak szablonów po stronie serwera).
+- [ ] `GET /v3/api-docs` zwraca specyfikację OpenAPI z endpointami `diet-plans` w obu strefach. Strefy są widoczne jako osobne grupy albo tagi (`shop`, `admin`).
 - [ ] Swagger UI dostępny lokalnie. Zdecyduj świadomie, czy ma być dostępny na produkcji (profil).
 - [ ] Specyfikacja jest poprawna dla frontu:
   - pola nienullowalne w Kotlinie są w schemacie `required`,
