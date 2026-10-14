@@ -1,6 +1,6 @@
 # T-013 — Kontrakt API: OpenAPI generowane przez backend
 
-**Status:** REVIEW · **Etap:** 0 · **Kto:** Ty (dokończył Claude) · **ADR:** 0011, 0012
+**Status:** DONE · **Etap:** 0 · **Kto:** Ty (dokończył Claude) · **ADR:** 0011, 0012
 
 ## Cel
 Backend publikuje opis swojego API w formacie OpenAPI. To źródło prawdy dla frontu, z którego w T-015 generujemy typowanego klienta TypeScript.

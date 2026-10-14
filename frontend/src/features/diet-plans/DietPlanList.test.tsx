@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 import { DietPlanList } from '@/features/diet-plans/DietPlanList'
 import type { DietPlan } from '@/features/diet-plans/dietPlansApi'
@@ -19,7 +20,9 @@ function renderList() {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   return render(
     <QueryClientProvider client={queryClient}>
-      <DietPlanList />
+      <MemoryRouter>
+        <DietPlanList />
+      </MemoryRouter>
     </QueryClientProvider>,
   )
 }
@@ -38,6 +41,10 @@ describe('DietPlanList', () => {
 
     const keto = await screen.findByRole('heading', { name: 'Keto' })
     expect(keto.closest('article')).toHaveTextContent('1500 kcal dziennie')
+    expect(screen.getAllByRole('link', { name: 'Zobacz jadłospis' })[0]).toHaveAttribute(
+      'href',
+      '/?dieta=1#jadlospis',
+    )
     expect(screen.getByRole('heading', { name: 'Wege' })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Archiwalna' })).not.toBeInTheDocument()
   })

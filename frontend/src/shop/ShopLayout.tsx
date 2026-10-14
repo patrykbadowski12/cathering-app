@@ -3,6 +3,7 @@ import { Logo } from '@/components/Logo'
 
 const navigation = [
   { href: '#diety', label: 'Diety' },
+  { href: '#jadlospis', label: 'Jadłospis' },
   { href: '#jak-to-dziala', label: 'Jak to działa' },
 ]
 
