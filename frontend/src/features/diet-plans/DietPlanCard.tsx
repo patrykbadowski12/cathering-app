@@ -1,5 +1,7 @@
-import { Flame } from 'lucide-react'
+import { CalendarDays, Flame } from 'lucide-react'
+import { Link } from 'react-router'
 import type { DietPlan } from '@/features/diet-plans/dietPlansApi'
+import { menuLinkFor } from '@/features/menu/menuLink'
 
 const accents = [
   'from-emerald-400 to-teal-500',
@@ -28,14 +30,24 @@ export function DietPlanCard({ dietPlan, index }: DietPlanCardProps) {
             <span className="font-semibold text-slate-900">{dietPlan.kcal}</span> kcal dziennie
           </span>
         </p>
-        <button
-          type="button"
-          disabled
-          title="Zamawianie będzie dostępne wkrótce"
-          className="mt-8 rounded-full bg-brand px-4 py-2.5 font-medium text-brand-foreground transition disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Zamów wkrótce
-        </button>
+        <div className="mt-8 flex flex-col gap-2">
+          <Link
+            to={menuLinkFor(dietPlan.id)}
+            preventScrollReset
+            className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 font-medium text-brand-strong ring-1 ring-brand-muted transition hover:bg-brand-soft"
+          >
+            <CalendarDays aria-hidden className="size-4" />
+            Zobacz jadłospis
+          </Link>
+          <button
+            type="button"
+            disabled
+            title="Zamawianie będzie dostępne wkrótce"
+            className="rounded-full bg-brand px-4 py-2.5 font-medium text-brand-foreground transition disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Zamów wkrótce
+          </button>
+        </div>
       </div>
     </article>
   )

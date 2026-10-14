@@ -1,6 +1,7 @@
 import { DietPlanList } from '@/features/diet-plans/DietPlanList'
 import { HeroSection } from '@/shop/home/HeroSection'
 import { HowItWorksSection } from '@/shop/home/HowItWorksSection'
+import { WeeklyMenuSection } from '@/shop/home/WeeklyMenuSection'
 
 export function HomePage() {
   return (
@@ -17,6 +18,7 @@ export function HomePage() {
           <DietPlanList />
         </div>
       </section>
+      <WeeklyMenuSection />
       <HowItWorksSection />
     </>
   )
