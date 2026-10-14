@@ -24,6 +24,3 @@ Złamanie reguł zależności (np. `domain` importuje JPA, `module-order` import
   2. `application` zależy tylko od `domain` i `org.springframework.transaction` (ADR 0009),
   3. żaden moduł nie importuje `application`/`infrastructure`/`web` innego modułu.
 - [ ] Demonstracja: celowo złam regułę, pokaż, że build/test pada, a potem wycofaj zmianę.
-
-## Review
-_(uzupełnia Claude)_

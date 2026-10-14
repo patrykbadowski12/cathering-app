@@ -9,7 +9,9 @@ export interface DietPlan {
 }
 
 export async function fetchDietPlans(): Promise<DietPlan[]> {
-  const response = await fetch('/api/v1/diet-plans', { headers: { Accept: 'application/json' } })
+  const response = await fetch('/api/v1/shop/diet-plans', {
+    headers: { Accept: 'application/json' },
+  })
   if (!response.ok) {
     throw new Error(`Failed to load diet plans: ${response.status}`)
   }

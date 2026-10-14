@@ -18,9 +18,9 @@ TODO → IN PROGRESS → REVIEW → DONE
 ```
 
 1. Bierzesz zadanie z góry kolumny TODO w `board.md` i zmieniasz status na `IN PROGRESS`.
-2. Pracujesz. Pytania i wątpliwości omawiamy w rozmowie, a ważne ustalenia Claude zapisuje w Review zadania albo w ADR.
+2. Pracujesz. Pytania i wątpliwości omawiamy w rozmowie, a decyzje Claude zapisuje jako ADR.
 3. Gdy uznasz, że skończone: status `REVIEW` i piszesz do Claude'a „review T-00X”.
-4. Claude dopisuje uwagi w sekcji **Review** pliku zadania i ustawia `DONE` albo `CHANGES`.
+4. Review jest **tylko w rozmowie**. W pliku zadania Claude odhacza kryteria i ustawia `DONE` albo `CHANGES`. Pliki zadań nie mają sekcji Review (od 2026-10-13).
 
 ## Git: gałąź per zadanie
 
@@ -58,6 +58,7 @@ cd frontend && npm ci && npm run dev   # sklep na http://localhost:5173 (wymaga 
 - **Front:** otwierasz `http://localhost:5173`. Vite serwuje stronę i przekazuje `/api/*` do Springa na `:8080`, więc dla przeglądarki to jedna domena (ADR 0011). Szczegóły w `frontend/README.md`.
 
 - **IntelliJ:** w konfiguracji uruchomieniowej ustaw profil `local`. W konfiguracji typu *Spring Boot* jest pole *Active profiles*. W zwykłej konfiguracji Kotlin dodaj opcję VM `-Dspring.profiles.active=local`. Bez profilu aplikacja nie wystartuje, bo w `application.yaml` celowo nie ma danych dostępowych do bazy.
+- **Kontrakt API:** `http://localhost:8080/docs` (Swagger UI), `http://localhost:8080/v3/api-docs` (JSON). Kopia w repo: `docs/api/openapi.json`, pilnowana testem `OpenApiContractTest`. Po zmianie API odśwież ją: `./gradlew :app:test --tests '*OpenApiContractTest' -Dopenapi.update=true`.
 - **Testy:** `./gradlew build` nie potrzebuje `docker compose`. Testy integracyjne same stawiają Postgresa przez Testcontainers (ten sam obraz co w `compose.yaml`, losowy port), więc wymagają tylko działającego Dockera.
 
 ## Styl kodu (ktlint)

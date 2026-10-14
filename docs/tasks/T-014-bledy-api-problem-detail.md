@@ -19,5 +19,3 @@ Błędy walidacji i „nie znaleziono” zwracają spójną odpowiedź `applicat
 - [ ] Kształt błędu opisany w OpenAPI (jeśli T-013 jest już zrobione).
 - [ ] Testy, np. w ramach T-011 (`@WebMvcTest`).
 
-## Review
-_(uzupełnia Claude)_

@@ -30,5 +30,3 @@ To, co dziś sprawdzamy ręcznie curlem (kody HTTP, `Location`, kształt JSON-a,
 - `@WebMvcTest` nie wczytuje Twojego `DietModuleConfig` (to `@Configuration`, a nie `@Controller`), więc beany use case'ów trzeba dostarczyć samemu.
 - 500 dla pustej nazwy (brak `@ControllerAdvice`) **nie** jest tu do naprawy, bo to E1. Możesz jednak dodać test, który dokumentuje obecne zachowanie, i oznaczyć go komentarzem `// TODO(E1): expect 400`.
 
-## Review
-_(uzupełnia Claude)_
