@@ -18,12 +18,12 @@ Format: krótki kontekst, decyzja i konsekwencje. Wzorzec: Michael Nygard, „Do
 | [0010](0010-migracje-w-modulach.md) | Migracje Flyway w module-właścicielu, wersje datowe `V<yyyy>_<MM>_<dd>_<HHmm>__` | Accepted (wdrożenie: T-006) |
 | [0011](0011-frontend-spa-react.md) | Frontend: SPA React + TypeScript w `frontend/`, ten sam origin co API, klient generowany z OpenAPI; SSR sklepu (Next.js) odłożone | Accepted |
 | [0012](0012-uklad-adresow-sklep-panel-api.md) | Jedna domena per tenant: `/` sklep, `/admin` panel, API rozdzielone na `/api/v1/shop` (publiczne) i `/api/v1/admin` (sesja właściciela) | Accepted |
+| [0013](0013-granice-modulow-archunit.md) | Granice modułów: Gradle (zależności modułów) + testy ArchUnit (warstwy, dostęp między modułami, czysty shared kernel) | Accepted (wdrożenie: T-008) |
 
 ## Otwarte decyzje
 
 | Pytanie | Opcje | Rozstrzygamy w |
 |---|---|---|
 | Rozpoznawanie tenanta w Fazie 2 (host, własne domeny, panel, proxy) | kierunek opisany w ADR 0007, do potwierdzenia | Faza 2 |
-| Jak wymusić granice modułów? | Gradle submoduły `domain/infra/web` / ArchUnit / Spring Modulith | T-008 |
 | Gdzie żyje kod wspólny dla persystencji (`AuditableEntity`)? | `shared-kernel` / osobny moduł `shared-infrastructure` | T-009 |
 | Deploy frontu: pliki serwowane przez Spring czy S3 + CloudFront? | ADR 0011 zostawia otwarte | E6 (CI/CD) |

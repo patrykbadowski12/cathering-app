@@ -14,7 +14,7 @@ White-label SaaS for catering companies (Kotlin, Spring Boot 4, modular monolith
 - Keep tasks small but goal-oriented, with checkable acceptance criteria and hints instead of solutions. Split later epics into tasks only when we reach them.
 
 ## Architecture rules (see ADRs)
-- One Gradle module per bounded context with layers `domain` (pure Kotlin) → `application` (use cases, transaction boundary, only `spring-tx` allowed) → `infrastructure`/`web`; modules talk only via public domain API and domain events.
+- One Gradle module per bounded context with layers `domain` (pure Kotlin) → `application` (use cases, transaction boundary, only `spring-tx` allowed) → `infrastructure`/`web`; modules talk only via public domain API and domain events. Enforced by `ArchitectureTest` (ArchUnit, ADR 0013); packages must follow `com.cateringplatform.<module>.(domain|application|infrastructure|web)`.
 - PostgreSQL + Flyway; schema only via migrations.
 - Spring MVC (blocking); tenant context via `ThreadLocal`.
 - Backend exposes REST only (`/api/v1/...`); OpenAPI is the contract, the TypeScript client is generated from it. Frontend: React + TypeScript (Vite) in `frontend/`, same origin as the API (ADR 0011).
