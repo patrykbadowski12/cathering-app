@@ -1,6 +1,6 @@
 # T-013 — Kontrakt API: OpenAPI generowane przez backend
 
-**Status:** TODO · **Etap:** 0 · **Kto:** Ty · **ADR:** 0011
+**Status:** REVIEW · **Etap:** 0 · **Kto:** Ty (dokończył Claude) · **ADR:** 0011, 0012
 
 ## Cel
 Backend publikuje opis swojego API w formacie OpenAPI. To źródło prawdy dla frontu, z którego w T-015 generujemy typowanego klienta TypeScript.
@@ -11,25 +11,15 @@ Backend publikuje opis swojego API w formacie OpenAPI. To źródło prawdy dla f
 - Swagger UI jako narzędzie developerskie.
 
 ## Kryteria akceptacji
-- [ ] **Najpierw podział ścieżek wg ADR 0012**, zanim front wygeneruje z kontraktu klienta:
-  - `GET /api/v1/shop/diet-plans` (lista) i `GET /api/v1/shop/diet-plans/{id}`, czyli publiczne odczyty,
-  - `POST /api/v1/admin/diet-plans`, czyli zarządzanie. Nagłówek `Location` wskazuje na zasób w `admin`.
-
-  Ten sam use case jest wołany z dwóch kontrolerów (adapterów), osobnych dla `shop` i `admin`. Zaktualizuj `docs/http/dietPlans.http`.
-- [ ] Usunięte `spring-boot-starter-thymeleaf` z `module-diet` i `module-order` (ADR 0011: brak szablonów po stronie serwera).
-- [ ] `GET /v3/api-docs` zwraca specyfikację OpenAPI z endpointami `diet-plans` w obu strefach. Strefy są widoczne jako osobne grupy albo tagi (`shop`, `admin`).
-- [ ] Swagger UI dostępny lokalnie. Zdecyduj świadomie, czy ma być dostępny na produkcji (profil).
-- [ ] Specyfikacja jest poprawna dla frontu:
-  - pola nienullowalne w Kotlinie są w schemacie `required`,
-  - `state` ma wartości enuma,
-  - `id` jest typu `string` w formacie `uuid`.
-- [ ] Odpowiedzi opisane z kodami (`201` z nagłówkiem `Location`, `404`, `400`).
-- [ ] Wygenerowana specyfikacja zapisana w repo (np. `docs/api/openapi.json`) albo generowana w buildzie. Wybierz i uzasadnij.
+- [x] Podział ścieżek wg ADR 0012: `GET /api/v1/shop/diet-plans`, `GET /api/v1/shop/diet-plans/{id}`, `POST /api/v1/admin/diet-plans` (`Location` w `admin`). Dwa kontrolery wołają te same use case'y. `docs/http/dietPlans.http` zaktualizowany.
+- [x] Usunięte `spring-boot-starter-thymeleaf` z `module-diet` i `module-order`.
+- [x] `GET /v3/api-docs` zwraca specyfikację z endpointami w obu strefach, tagi `DietPlanShop` / `DietPlanAdmin`.
+- [x] Swagger UI lokalnie pod `/docs`. Decyzja o produkcji: wyłączyć w profilu produkcyjnym, gdy powstanie (E6).
+- [x] Specyfikacja poprawna dla frontu: pola nienullowalne `required`, `state` z wartościami enuma, `id` jako `string` w formacie `uuid`, opisowe `operationId`, serwer względny `/`.
+- [x] Odpowiedzi opisane kodami (`201`, `200`, `404` bez treści). `400` dojdzie w T-014.
+- [x] Specyfikacja w repo (`docs/api/openapi.json`), pilnowana testem `OpenApiContractTest`: build pada, gdy API i plik się rozjadą. Odświeżenie: `./gradlew :app:test --tests '*OpenApiContractTest' -Dopenapi.update=true`.
 
 ## Wskazówki
-- Najpopularniejsza biblioteka to **springdoc-openapi**. Sprawdź, która linia wersji obsługuje **Spring Boot 4** (starsze 2.x są dla Boot 3).
-- Nullability: z `-Xjsr305=strict` i modułem Kotlina springdoc zwykle poprawnie wykrywa `required`. Sprawdź w wygenerowanym JSON-ie, a nie zakładaj.
-- Endpoint `/v3/api-docs` przechodzi przez `TenantFilter`. Zastanów się, czy to problem (w Fazie 1 nie, w Fazie 2 z hostem tenanta tak).
-
-## Review
-_(uzupełnia Claude)_
+- Wymagane pola z nullability Kotlina: konfiguracja Kotlina w springdoc włącza się tylko z modułem Kotlina dla **Jacksona 2** (`com.fasterxml.jackson.module:jackson-module-kotlin`), bo Swagger wewnętrznie używa Jacksona 2. Aplikacja sama używa Jacksona 3.
+- Adnotacje Swaggera w modułach jako `compileOnly` (`swagger-annotations-jakarta`), w wersji zgodnej ze springdoc.
+- Endpoint `/v3/api-docs` przechodzi przez `TenantFilter`. W Fazie 1 to nie problem, w Fazie 2 (host tenanta) trzeba to przemyśleć.

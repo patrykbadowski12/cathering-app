@@ -1,11 +1,5 @@
-###
-# curl --location 'localhost:8080/api/v1/diet-plans'
-#--header 'Content-Type: application/json'
-#--data '{
-#    "name": "Dieta normalna",
-#    "kcal": 2000
-#}'
-POST localhost:8080/api/v1/diet-plans
+### Create diet plan (admin)
+POST http://localhost:8080/api/v1/admin/diet-plans
 Content-Type: application/json
 
 {
@@ -13,14 +7,16 @@ Content-Type: application/json
   "kcal": 2000
 }
 
-###
+> {% client.global.set("dietPlanId", response.body.id); %}
 
-# curl --location 'localhost:8080/api/v1/diet-plans'
-GET localhost:8080/api/v1/diet-plans
+### Get diet plan (admin)
+GET http://localhost:8080/api/v1/admin/diet-plans/{{dietPlanId}}
 
-###
+### List diet plans (shop)
+GET http://localhost:8080/api/v1/shop/diet-plans
 
-# curl --location 'localhost:8080/api/v1/diet-plans/1df264d0-ec1a-4a7c-a0f8-9ef69b6f7a15'
-GET localhost:8080/api/v1/diet-plans/1df264d0-ec1a-4a7c-a0f8-9ef69b6f7a15
+### Get diet plan (shop)
+GET http://localhost:8080/api/v1/shop/diet-plans/{{dietPlanId}}
 
-###
+### OpenAPI spec
+GET http://localhost:8080/v3/api-docs

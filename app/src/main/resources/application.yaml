@@ -14,3 +14,9 @@ catering:
 logging:
   pattern:
     level: "%5p [tenant=%X{tenant:-none}]"
+
+springdoc:
+  swagger-ui:
+    path: /docs
+  api-docs:
+    enabled: true

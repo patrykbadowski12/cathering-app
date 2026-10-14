@@ -16,5 +16,3 @@ Front rozmawia z backendem przez klienta **wygenerowanego** z OpenAPI. Pierwszy 
 - [ ] Dodanie diety w panelu → pojawia się na liście; błąd walidacji pokazany przy polu.
 - [ ] Testy komponentów dla listy i formularza.
 
-## Review
-_(uzupełnia Claude; akceptacja: Ty)_

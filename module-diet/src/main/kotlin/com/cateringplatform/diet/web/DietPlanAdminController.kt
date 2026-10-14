@@ -2,9 +2,11 @@ package com.cateringplatform.diet.web
 
 import com.cateringplatform.diet.application.CreateDietPlanUseCase
 import com.cateringplatform.diet.application.GetDietPlanUseCase
-import com.cateringplatform.diet.application.ListDietPlanUseCase
 import com.cateringplatform.diet.domain.DietPlanId
 import com.cateringplatform.shared.tenant.TenantContext
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,37 +24,35 @@ data class CreateDietPlanRequest(
 )
 
 @RestController
-@RequestMapping("/api/v1/diet-plans")
-class DietPlanController(
+@RequestMapping("/api/v1/admin/diet-plans")
+@Tag(name = "DietPlanAdmin", description = "Diet plan management for the catering owner")
+class DietPlanAdminController(
     private val createDietPlanUseCase: CreateDietPlanUseCase,
-    private val listDietPlanUseCase: ListDietPlanUseCase,
     private val getDietPlanUseCase: GetDietPlanUseCase,
 ) {
 
-    private val logger = LoggerFactory.getLogger(DietPlanController::class.java)
+    private val logger = LoggerFactory.getLogger(DietPlanAdminController::class.java)
 
+    @ApiResponse(responseCode = "201", description = "Diet plan created")
     @PostMapping
-    fun create(@RequestBody request: CreateDietPlanRequest, uriComponentsBuilder: UriComponentsBuilder) =
-        createDietPlanUseCase.execute(TenantContext.get(), request.name, request.kcal)
+    fun createAdminDietPlan(
+        @RequestBody request: CreateDietPlanRequest,
+        uriComponentsBuilder: UriComponentsBuilder,
+    ): ResponseEntity<DietPlanResponse> {
+        val response = createDietPlanUseCase.execute(TenantContext.get(), request.name, request.kcal)
             .let { DietPlanResponse.fromDomain(it) }
-            .also { logger.info("Created dietPlan {}", it) }
-            .let {
-                ResponseEntity
-                    .created(
-                        uriComponentsBuilder
-                            .path("/api/v1/diet-plans/{id}")
-                            .buildAndExpand(it.id)
-                            .toUri(),
-                    ).body(it)
-            }
+        logger.info("Created dietPlan {}", response)
+        val location = uriComponentsBuilder
+            .path("/api/v1/admin/diet-plans/{id}")
+            .buildAndExpand(response.id)
+            .toUri()
+        return ResponseEntity.created(location).body(response)
+    }
 
-    @GetMapping
-    fun list() = listDietPlanUseCase.execute(TenantContext.get())
-        .map { DietPlanResponse.fromDomain(it) }
-        .let { ResponseEntity.ok(it) }
-
+    @ApiResponse(responseCode = "200", description = "Diet plan")
+    @ApiResponse(responseCode = "404", description = "Diet plan not found", content = [Content()])
     @GetMapping("/{id}")
-    fun get(@PathVariable("id") id: UUID): ResponseEntity<DietPlanResponse> =
+    fun getAdminDietPlan(@PathVariable("id") id: UUID): ResponseEntity<DietPlanResponse> =
         getDietPlanUseCase.execute(DietPlanId(id), TenantContext.get())
             ?.let { DietPlanResponse.fromDomain(it) }
             ?.let { ResponseEntity.ok(it) }
