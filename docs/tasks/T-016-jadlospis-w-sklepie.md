@@ -1,6 +1,6 @@
 # T-016 — Jadłospis tygodniowy w sklepie (dane przykładowe)
 
-**Status:** REVIEW · **Etap:** 0 · **Kto:** Claude · **ADR:** 0011, 0012
+**Status:** DONE · **Etap:** 0 · **Kto:** Claude · **ADR:** 0011, 0012
 
 ## Cel
 Klient widzi na stronie jadłospis na bieżący tydzień. Dane są na razie przykładowe, ale w kształcie przyszłego API z E2 (dieta → dzień → posiłki), więc podmiana na prawdziwy endpoint dotyczy jednej funkcji.

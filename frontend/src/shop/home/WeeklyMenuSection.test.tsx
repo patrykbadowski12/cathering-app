@@ -1,25 +1,19 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, within } from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router'
+import { http, HttpResponse } from 'msw'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { DietPlan } from '@/features/diet-plans/dietPlansApi'
 import { WeeklyMenuSection } from '@/shop/home/WeeklyMenuSection'
+import { renderWithProviders } from '@/test/render'
+import { server } from '@/test/server'
 
 const dietPlans: DietPlan[] = [
   { id: 'keto-id', name: 'Keto', kcal: 1500, state: 'ACTIVE' },
   { id: 'sport-id', name: 'Sport', kcal: 2500, state: 'ACTIVE' },
 ]
 
-function renderSection(initialEntry = '/') {
-  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  return render(
-    <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={[initialEntry]}>
-        <WeeklyMenuSection />
-      </MemoryRouter>
-    </QueryClientProvider>,
-  )
+function renderSection(route = '/') {
+  return renderWithProviders(<WeeklyMenuSection />, { route })
 }
 
 async function dayTotalKcal(): Promise<number> {
@@ -31,17 +25,7 @@ async function dayTotalKcal(): Promise<number> {
 describe('WeeklyMenuSection', () => {
   beforeEach(() => {
     window.HTMLElement.prototype.scrollIntoView = vi.fn()
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockImplementation(() =>
-        Promise.resolve(
-          new Response(JSON.stringify(dietPlans), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-          }),
-        ),
-      ),
-    )
+    server.use(http.get('/api/v1/shop/diet-plans', () => HttpResponse.json(dietPlans)))
   })
 
   it('selects the first diet by default', async () => {
