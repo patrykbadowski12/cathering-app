@@ -1,6 +1,6 @@
 # T-014 — Błędy API jako `ProblemDetail`
 
-**Status:** REVIEW · **Etap:** 0 · **Kto:** Ty · **ADR:** 0011
+**Status:** DONE · **Etap:** 0 · **Kto:** Ty · **ADR:** 0011
 
 ## Cel
 Błędy walidacji i „nie znaleziono” zwracają spójną odpowiedź `application/problem+json` (RFC 9457) z czytelnym kodem HTTP, a nie `500` ze stack trace'em. Formularz na froncie wie, które pole jest źle wypełnione.
