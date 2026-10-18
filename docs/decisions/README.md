@@ -25,5 +25,6 @@ Format: krótki kontekst, decyzja i konsekwencje. Wzorzec: Michael Nygard, „Do
 | Pytanie | Opcje | Rozstrzygamy w |
 |---|---|---|
 | Rozpoznawanie tenanta w Fazie 2 (host, własne domeny, panel, proxy) | kierunek opisany w ADR 0007, do potwierdzenia | Faza 2 |
-| Gdzie żyje kod wspólny dla persystencji (`AuditableEntity`)? | `shared-kernel` / osobny moduł `shared-infrastructure` | T-009 |
+| Model diety: kaloryczność jako osobna dieta czy warianty z ceną? | [0014](0014-model-diety-warianty-i-cena.md) (Proposed): płasko / dieta z wariantami / cena z kcal | przed E1 |
+| Gdzie żyje kod wspólny dla persystencji (`AuditableEntity`)? | kopia w module / osobny moduł techniczny / `shared-kernel` | T-009 (start E3) |
 | Deploy frontu: pliki serwowane przez Spring czy S3 + CloudFront? | ADR 0011 zostawia otwarte | E6 (CI/CD) |

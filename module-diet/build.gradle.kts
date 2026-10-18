@@ -10,6 +10,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-validation")
     compileOnly("io.swagger.core.v3:swagger-annotations-jakarta:2.2.55")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+    testImplementation("tools.jackson.module:jackson-module-kotlin")
     testImplementation("org.springframework.boot:spring-boot-data-jpa-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.springframework.boot:spring-boot-starter-flyway")

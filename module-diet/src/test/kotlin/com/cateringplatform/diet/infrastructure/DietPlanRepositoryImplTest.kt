@@ -1,6 +1,6 @@
 package com.cateringplatform.diet.infrastructure
 
-import com.cateringplatform.diet.DietTestApplication
+import com.cateringplatform.diet.JpaAuditingTestConfiguration
 import com.cateringplatform.diet.TestcontainersConfiguration
 import com.cateringplatform.diet.domain.DietPlan
 import com.cateringplatform.diet.domain.DietPlanId
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import
 import java.util.UUID
 
 @DataJpaTest(properties = ["spring.jpa.properties.hibernate.generate_statistics=true"])
-@Import(DietPlanRepositoryImpl::class, TestcontainersConfiguration::class)
+@Import(DietPlanRepositoryImpl::class, TestcontainersConfiguration::class, JpaAuditingTestConfiguration::class)
 class DietPlanRepositoryImplTest @Autowired constructor(
     private val repository: DietPlanRepositoryImpl,
     private val jpaRepository: DietPlanJpaRepository,
@@ -65,7 +65,7 @@ class DietPlanRepositoryImplTest @Autowired constructor(
         val entity = jpaRepository.findById(dietPlan.id.value).orElseThrow()
 
         // then
-        assertEquals(DietTestApplication.TEST_AUDITOR, entity.createdBy)
+        assertEquals(JpaAuditingTestConfiguration.TEST_AUDITOR, entity.createdBy)
         assertNotNull(entity.createdOn)
     }
 
