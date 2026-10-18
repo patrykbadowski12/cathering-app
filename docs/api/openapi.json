@@ -38,6 +38,16 @@
               }
             },
             "description" : "Diet plan created"
+          },
+          "400" : {
+            "content" : {
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description" : "Invalid request"
           }
         },
         "tags" : [ "DietPlanAdmin" ]
@@ -67,6 +77,13 @@
             "description" : "Diet plan"
           },
           "404" : {
+            "content" : {
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
             "description" : "Diet plan not found"
           }
         },
@@ -118,6 +135,13 @@
             "description" : "Diet plan"
           },
           "404" : {
+            "content" : {
+              "application/problem+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
             "description" : "Diet plan not found"
           }
         },
@@ -132,10 +156,13 @@
         "properties" : {
           "kcal" : {
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "exclusiveMinimum" : 0
           },
           "name" : {
-            "type" : "string"
+            "type" : "string",
+            "maxLength" : 200,
+            "minLength" : 0
           }
         },
         "required" : [ "kcal", "name" ]
@@ -160,6 +187,46 @@
           }
         },
         "required" : [ "id", "kcal", "name", "state" ]
+      },
+      "FieldViolation" : {
+        "type" : "object",
+        "properties" : {
+          "field" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "field", "message" ]
+      },
+      "ProblemDetail" : {
+        "type" : "object",
+        "description" : "RFC 9457 problem details",
+        "properties" : {
+          "detail" : {
+            "type" : "string"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FieldViolation"
+            }
+          },
+          "instance" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
       }
     }
   }

@@ -2,11 +2,18 @@ package com.cateringplatform.diet.web
 
 import com.cateringplatform.diet.application.CreateDietPlanUseCase
 import com.cateringplatform.diet.application.GetDietPlanUseCase
+import com.cateringplatform.diet.domain.DietPlan
 import com.cateringplatform.diet.domain.DietPlanId
 import com.cateringplatform.shared.tenant.TenantContext
 import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.Positive
+import jakarta.validation.constraints.Size
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,8 +26,12 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.util.UUID
 
 data class CreateDietPlanRequest(
-    val name: String,
-    val kcal: Int,
+    @field:NotBlank
+    @field:Size(max = DietPlan.MAX_NAME_LENGTH)
+    val name: String?,
+    @field:NotNull
+    @field:Positive
+    val kcal: Int?,
 )
 
 @RestController
@@ -34,12 +45,17 @@ class DietPlanAdminController(
     private val logger = LoggerFactory.getLogger(DietPlanAdminController::class.java)
 
     @ApiResponse(responseCode = "201", description = "Diet plan created")
+    @ApiResponse(
+        responseCode = "400",
+        description = "Invalid request",
+        content = [Content(mediaType = "application/problem+json", schema = Schema(ref = PROBLEM_DETAIL_SCHEMA))],
+    )
     @PostMapping
     fun createAdminDietPlan(
-        @RequestBody request: CreateDietPlanRequest,
+        @RequestBody @Valid request: CreateDietPlanRequest,
         uriComponentsBuilder: UriComponentsBuilder,
     ): ResponseEntity<DietPlanResponse> {
-        val response = createDietPlanUseCase.execute(TenantContext.get(), request.name, request.kcal)
+        val response = createDietPlanUseCase.execute(TenantContext.get(), request.name!!, request.kcal!!)
             .let { DietPlanResponse.fromDomain(it) }
         logger.info("Created dietPlan {}", response)
         val location = uriComponentsBuilder
@@ -50,11 +66,14 @@ class DietPlanAdminController(
     }
 
     @ApiResponse(responseCode = "200", description = "Diet plan")
-    @ApiResponse(responseCode = "404", description = "Diet plan not found", content = [Content()])
+    @ApiResponse(
+        responseCode = "404",
+        description = "Diet plan not found",
+        content = [Content(mediaType = "application/problem+json", schema = Schema(ref = PROBLEM_DETAIL_SCHEMA))],
+    )
     @GetMapping("/{id}")
     fun getAdminDietPlan(@PathVariable("id") id: UUID): ResponseEntity<DietPlanResponse> =
         getDietPlanUseCase.execute(DietPlanId(id), TenantContext.get())
-            ?.let { DietPlanResponse.fromDomain(it) }
-            ?.let { ResponseEntity.ok(it) }
-            ?: ResponseEntity.notFound().build()
+            .let { DietPlanResponse.fromDomain(it) }
+            .let { ResponseEntity.ok(it) }
 }

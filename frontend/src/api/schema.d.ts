@@ -86,6 +86,20 @@ export interface components {
             /** @enum {string} */
             state: "ACTIVE" | "INACTIVE";
         };
+        FieldViolation: {
+            field: string;
+            message: string;
+        };
+        /** @description RFC 9457 problem details */
+        ProblemDetail: {
+            detail?: string;
+            errors?: components["schemas"]["FieldViolation"][];
+            instance?: string;
+            /** Format: int32 */
+            status?: number;
+            title?: string;
+            type?: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -117,6 +131,15 @@ export interface operations {
                     "*/*": components["schemas"]["DietPlanResponse"];
                 };
             };
+            /** @description Invalid request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
         };
     };
     getAdminDietPlan: {
@@ -144,7 +167,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
             };
         };
     };
@@ -193,7 +218,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
             };
         };
     };

@@ -1,5 +1,6 @@
 package com.cateringplatform.diet.domain
 
+import com.cateringplatform.shared.error.FieldViolation
 import com.cateringplatform.shared.tenant.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -46,23 +47,23 @@ class DietPlanTest {
     @Test
     fun `should throw exception when name is empty`() {
         // given & when
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<InvalidDietPlanException> {
             DietPlan.create(TenantId(UUID.randomUUID()), "", TEST_KCAL)
         }
 
         // then
-        assertEquals("Diet plan name must not be blank", exception.message)
+        assertEquals(listOf(FieldViolation("name", "Diet plan name must not be blank")), exception.violations)
     }
 
     @Test
     fun `should throw exception when name is fake empty`() {
         // given & when
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<InvalidDietPlanException> {
             DietPlan.create(TenantId(UUID.randomUUID()), "      ", TEST_KCAL)
         }
 
         // then
-        assertEquals("Diet plan name must not be blank", exception.message)
+        assertEquals(listOf(FieldViolation("name", "Diet plan name must not be blank")), exception.violations)
     }
 
     @Test
@@ -80,33 +81,36 @@ class DietPlanTest {
     @Test
     fun `should throw exception when name is longer than max length`() {
         // given & when
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<InvalidDietPlanException> {
             DietPlan.create(TenantId(UUID.randomUUID()), "a".repeat(DietPlan.MAX_NAME_LENGTH + 1), TEST_KCAL)
         }
 
         // then
-        assertEquals("Diet plan name must be at most 200 characters", exception.message)
+        assertEquals(
+            listOf(FieldViolation("name", "Diet plan name must be at most 200 characters")),
+            exception.violations,
+        )
     }
 
     @Test
     fun `should throw exception when kcal is negative value`() {
         // given & when
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<InvalidDietPlanException> {
             DietPlan.create(TenantId(UUID.randomUUID()), TEST_NAME, -1)
         }
 
         // then
-        assertEquals("Diet plan kcal must be greater than zero", exception.message)
+        assertEquals(listOf(FieldViolation("kcal", "Diet plan kcal must be greater than zero")), exception.violations)
     }
 
     @Test
     fun `should throw exception when kcal is zero`() {
         // given & when
-        val exception = assertThrows<IllegalArgumentException> {
+        val exception = assertThrows<InvalidDietPlanException> {
             DietPlan.create(TenantId(UUID.randomUUID()), TEST_NAME, 0)
         }
 
         // then
-        assertEquals("Diet plan kcal must be greater than zero", exception.message)
+        assertEquals(listOf(FieldViolation("kcal", "Diet plan kcal must be greater than zero")), exception.violations)
     }
 }
