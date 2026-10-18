@@ -16,15 +16,15 @@ Cel etapu: stabilna baza (repo, kompilacja, prawdziwa baza danych, migracje, tes
 | [T-005](tasks/T-005-postgres-docker.md) | PostgreSQL w Docker Compose | Ty | DONE | T-002 |
 | [T-006](tasks/T-006-flyway.md) | Flyway: pierwsza migracja i `ddl-auto: validate` | Ty | DONE | T-005 |
 | [T-007](tasks/T-007-test-repozytorium-testcontainers.md) | Test integracyjny repozytorium z Testcontainers | Claude | DONE | T-006 |
-| [T-008](tasks/T-008-granice-modulow.md) | Decyzja i implementacja: wymuszenie granic modułów | Claude | REVIEW | T-002 |
+| [T-008](tasks/T-008-granice-modulow.md) | Decyzja i implementacja: wymuszenie granic modułów | Claude | DONE | T-002 |
 | [T-009](tasks/T-009-wspolna-persystencja.md) | `AuditableEntity` we wspólnym miejscu | Ty | TODO | T-008 |
 | [T-010](tasks/T-010-ktlint.md) | ktlint i `.editorconfig`: jeden styl, bez wildcard importów | Claude | DONE | — |
 | [T-011](tasks/T-011-testy-web-i-konfiguracji.md) | Testy warstwy web (`@WebMvcTest`) i konfiguracji tenanta | Ty | TODO | T-004 |
 | [T-012](tasks/T-012-szkielet-frontendu.md) | Szkielet frontendu w `frontend/` (ADR 0011) | Claude | DONE | — |
 | [T-013](tasks/T-013-openapi.md) | Kontrakt API: OpenAPI generowane przez backend | Ty | DONE | — |
 | [T-014](tasks/T-014-bledy-api-problem-detail.md) | Błędy API jako `ProblemDetail` (400 z polami zamiast 500) | Ty | TODO | — |
-| [T-015](tasks/T-015-klient-api-i-pierwszy-ekran.md) | Typowany klient API + pierwszy ekran end-to-end (lista diet) | Claude | TODO | T-012, T-013 |
-| [T-016](tasks/T-016-jadlospis-w-sklepie.md) | Jadłospis tygodniowy w sklepie (dane przykładowe, kształt API z E2) | Claude | REVIEW | T-012 |
+| [T-015](tasks/T-015-klient-api-i-pierwszy-ekran.md) | Typowany klient API + pierwszy ekran end-to-end (lista diet) | Claude | REVIEW | T-012, T-013 |
+| [T-016](tasks/T-016-jadlospis-w-sklepie.md) | Jadłospis tygodniowy w sklepie (dane przykładowe, kształt API z E2) | Claude | DONE | T-012 |
 
 ## Epiki Fazy 1 (pionowe kawałki: backend + frontend; rozpisujemy, gdy dojdziemy)
 

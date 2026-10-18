@@ -1,6 +1,6 @@
 # T-008 — Decyzja i implementacja: wymuszenie granic modułów
 
-**Status:** REVIEW · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0001, 0004, 0005, 0009, 0013 · **Wykonanie:** Claude (na prośbę)
+**Status:** DONE · **Etap:** 0 · **Zależy od:** T-002 · **ADR:** 0001, 0004, 0005, 0009, 0013 · **Wykonanie:** Claude (na prośbę)
 
 ## Cel
 Złamanie reguł zależności (np. `domain` importuje JPA, `module-order` importuje `diet.infrastructure`) **psuje build**, a nie jest tylko łapane na review.
