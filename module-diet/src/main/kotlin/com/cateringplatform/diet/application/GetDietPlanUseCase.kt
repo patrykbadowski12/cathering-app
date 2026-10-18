@@ -8,6 +8,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional(readOnly = true)
 class GetDietPlanUseCase(private val repository: DietPlanRepository) {
-    fun execute(dietPlanId: DietPlanId, tenantId: TenantId): DietPlan? =
-        repository.findByIdAndTenantId(dietPlanId, tenantId)
+    fun execute(dietPlanId: DietPlanId, tenantId: TenantId): DietPlan =
+        repository.findByIdAndTenantId(dietPlanId, tenantId) ?: throw DietPlanNotFoundException(dietPlanId)
 }

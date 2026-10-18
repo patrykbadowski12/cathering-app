@@ -17,9 +17,15 @@ data class DietPlan(
         const val MAX_NAME_LENGTH = 200
 
         fun create(tenantId: TenantId, name: String, kcal: Int): DietPlan {
-            require(name.isNotBlank()) { "Diet plan name must not be blank" }
-            require(name.length <= MAX_NAME_LENGTH) { "Diet plan name must be at most $MAX_NAME_LENGTH characters" }
-            require(kcal > 0) { "Diet plan kcal must be greater than zero" }
+            if (name.isBlank()) {
+                throw InvalidDietPlanException("name", "Diet plan name must not be blank")
+            }
+            if (name.length > MAX_NAME_LENGTH) {
+                throw InvalidDietPlanException("name", "Diet plan name must be at most $MAX_NAME_LENGTH characters")
+            }
+            if (kcal <= 0) {
+                throw InvalidDietPlanException("kcal", "Diet plan kcal must be greater than zero")
+            }
             return DietPlan(
                 id = DietPlanId(Ids.uuidV7()),
                 name = name,

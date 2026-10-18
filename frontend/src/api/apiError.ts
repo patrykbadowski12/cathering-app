@@ -1,17 +1,7 @@
-// TODO(T-014): take ProblemDetail from the generated schema once the backend documents it.
-export interface FieldError {
-  field: string
-  message: string
-}
+import type { ApiSchemas } from '@/api/client'
 
-export interface ProblemDetail {
-  type?: string
-  title?: string
-  status?: number
-  detail?: string
-  instance?: string
-  errors?: FieldError[]
-}
+export type ProblemDetail = ApiSchemas['ProblemDetail']
+export type FieldViolation = ApiSchemas['FieldViolation']
 
 export class ApiError extends Error {
   readonly status: number
@@ -24,7 +14,7 @@ export class ApiError extends Error {
     this.problem = problem
   }
 
-  get fieldErrors(): FieldError[] {
+  get fieldErrors(): FieldViolation[] {
     return this.problem?.errors ?? []
   }
 }

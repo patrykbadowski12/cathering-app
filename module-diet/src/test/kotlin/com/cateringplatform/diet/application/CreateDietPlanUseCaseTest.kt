@@ -1,6 +1,7 @@
 package com.cateringplatform.diet.application
 
 import com.cateringplatform.diet.domain.DietPlanState
+import com.cateringplatform.diet.domain.InvalidDietPlanException
 import com.cateringplatform.shared.tenant.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -40,7 +41,7 @@ class CreateDietPlanUseCaseTest {
         val kcal = 10
 
         // when
-        assertThrows<IllegalArgumentException> {
+        assertThrows<InvalidDietPlanException> {
             createDietPlanUseCase.execute(tenantId, name, kcal)
         }
 

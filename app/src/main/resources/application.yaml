@@ -4,6 +4,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  web:
+    locale: en
+    locale-resolver: fixed
 
 catering:
   tenant:

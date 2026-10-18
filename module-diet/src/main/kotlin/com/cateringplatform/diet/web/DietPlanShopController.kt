@@ -5,6 +5,7 @@ import com.cateringplatform.diet.application.ListDietPlanUseCase
 import com.cateringplatform.diet.domain.DietPlanId
 import com.cateringplatform.shared.tenant.TenantContext
 import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
@@ -29,11 +30,14 @@ class DietPlanShopController(
         .let { ResponseEntity.ok(it) }
 
     @ApiResponse(responseCode = "200", description = "Diet plan")
-    @ApiResponse(responseCode = "404", description = "Diet plan not found", content = [Content()])
+    @ApiResponse(
+        responseCode = "404",
+        description = "Diet plan not found",
+        content = [Content(mediaType = "application/problem+json", schema = Schema(ref = PROBLEM_DETAIL_SCHEMA))],
+    )
     @GetMapping("/{id}")
     fun getShopDietPlan(@PathVariable("id") id: UUID): ResponseEntity<DietPlanResponse> =
         getDietPlanUseCase.execute(DietPlanId(id), TenantContext.get())
-            ?.let { DietPlanResponse.fromDomain(it) }
-            ?.let { ResponseEntity.ok(it) }
-            ?: ResponseEntity.notFound().build()
+            .let { DietPlanResponse.fromDomain(it) }
+            .let { ResponseEntity.ok(it) }
 }

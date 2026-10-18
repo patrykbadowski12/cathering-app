@@ -6,6 +6,7 @@ import com.cateringplatform.shared.tenant.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.util.UUID
 
 class GetDietPlanUseCaseTest {
@@ -34,19 +35,17 @@ class GetDietPlanUseCaseTest {
         val dietPlan = DietPlan.create(tenantId, "Test name", 10)
         inMemoryDietPlanRepository.save(dietPlan)
 
-        // when
-        val result = getDietPlanUseCase.execute(dietPlan.id, TenantId(UUID.randomUUID()))
-
-        // then
-        assertNull(result)
+        // when && then
+        assertThrows<DietPlanNotFoundException> {
+            getDietPlanUseCase.execute(dietPlan.id, TenantId(UUID.randomUUID()))
+        }
     }
 
     @Test
     fun `should not find diet plan by id`() {
-        // when
-        val result = getDietPlanUseCase.execute(DietPlanId(UUID.randomUUID()), TenantId(UUID.randomUUID()))
-
-        // then
-        assertNull(result)
+        // when && then
+        assertThrows<DietPlanNotFoundException> {
+            getDietPlanUseCase.execute(DietPlanId(UUID.randomUUID()), TenantId(UUID.randomUUID()))
+        }
     }
 }
