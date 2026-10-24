@@ -4,7 +4,7 @@ White-label SaaS for catering companies (Kotlin, Spring Boot 4, modular monolith
 
 ## Working mode
 - Split of ownership (column "Kto" on the board):
-  - **Backend, infrastructure, cloud:** the user writes the code. Claude is a mentor/reviewer: plans tasks, discusses decisions, does code review, and implements only when explicitly asked.
+  - **Backend, infrastructure, cloud:** the user writes the code. Claude is a mentor/reviewer: plans tasks, discusses decisions, does code review. Claude never writes functional backend code (domain, use cases, controllers, persistence, business logic), even when asked; the user wants to learn it. Tests, configuration, build/tooling and docs are fine on request.
   - **Frontend (`frontend/`, ADR 0011):** Claude writes it. The user accepts the result but is not interested in frontend details. Code must stay conventional so another developer can take it over.
 - Code Claude writes: no explanatory comments/KDoc (explanations go in chat or the task Review); `TODO(T-NNN)` for deliberate temporary states is fine.
 - Tasks: `docs/board.md` (statuses) + `docs/tasks/T-NNN-*.md`. On "review T-NNN": read the diff/code and give the review **in chat only**; in the task file just tick acceptance criteria and set status `DONE` or `CHANGES` (task file and board). Task files have no Review section (since 2026-10-13).

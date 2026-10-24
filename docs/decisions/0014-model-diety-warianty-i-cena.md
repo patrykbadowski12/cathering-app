@@ -1,55 +1,31 @@
-# 0014 — Model diety: warianty kaloryczne i cena
+# 0014 — Model diety: warianty kaloryczne z ceną
 
-**Status:** Proposed · **Data:** 2026-10-18 · **Rozstrzygamy:** przed rozpisaniem E1
+**Status:** Accepted · **Data:** 2026-10-18 · **Wdrożenie:** E1
 
 ## Kontekst
-Dziś `DietPlan` to para „nazwa + kaloryczność”. Keto 1500 i Keto 2000 to dwa niezależne plany. Ceny jeszcze nie ma (E1: „cena jako `Money`”).
+Dziś `DietPlan` to para „nazwa + kaloryczność”. Keto 1500 i Keto 2000 to dwa niezależne plany. Ceny jeszcze nie ma.
 
-Na polskim rynku cateringów dietetycznych typowy układ wygląda tak:
-- klient wybiera **dietę** (Standard, Keto, Wege…), a potem **kaloryczność** z kilku stałych wariantów (np. 1200, 1500, 2000, 2500, 3000);
-- **cena zależy od wariantu** i jest podawana za dzień;
-- jadłospis jest wspólny dla diety, a warianty różnią się wielkością porcji.
+Na polskim rynku cateringów dietetycznych klient wybiera **dietę** (Standard, Keto, Wege…), a potem **kaloryczność**. Cena zależy zwykle od kaloryczności i jest podawana za dzień. Jadłospis jest wspólny dla diety, a kaloryczności różnią się wielkością porcji.
 
-Od tej decyzji zależą schemat bazy (E1), jadłospis (E2), zamówienie (E3) i lista produkcyjna (E5). Zmiana po E2 oznacza migrację danych w kilku modułach.
+Od tego modelu zależą jadłospis (E2), zapytania (E3), zamówienia i lista produkcyjna. Zmiana po E2 oznaczałaby migrację danych w kilku modułach.
 
-## Rozważane opcje
-
-### A. Płasko: jedna dieta = jedna kaloryczność (stan obecny)
-`DietPlan(name, kcal, price)`.
-- **Za:** najprostsze, już działa; zamówienie wskazuje jeden obiekt.
-- **Przeciw:**
-  - jadłospis trzeba wpisywać osobno dla każdej kaloryczności (5× ta sama praca dla właściciela) albo i tak powiązać plany „grupą”;
-  - sklep pokazuje 5 kart „Keto”;
-  - nie ma pojęcia „ta sama dieta, inna kaloryczność”, potrzebnego np. do zmiany kaloryczności w trakcie zamówienia.
-
-### B. Dieta z wariantami (rekomendacja)
-`Diet(name, description, slug, state)` 1 → n `DietVariant(kcal, pricePerDay, state)`.
-- **Za:**
-  - odpowiada temu, jak myśli właściciel i klient;
-  - jadłospis (E2) przypięty do diety, a nie do wariantu;
-  - zamówienie (E3) wskazuje wariant;
-  - sklep pokazuje jedną kartę z ceną „od X zł/dzień” i wyborem kaloryczności.
-- **Przeciw:**
-  - agregat z kolekcją (reguły: unikalne `kcal` w diecie, co najmniej jeden aktywny wariant w aktywnej diecie);
-  - przebudowa obecnego `DietPlan`, API i frontu.
-
-### C. Dieta z ceną liczoną z kaloryczności
-`Diet(name, basePrice, pricePerKcal, minKcal, maxKcal)`, klient wpisuje dowolne kcal.
-- **Za:** elastyczne, jeden rekord.
-- **Przeciw:**
-  - nietypowe na rynku i trudne do wyjaśnienia właścicielowi;
-  - kuchnia nie przygotuje „1837 kcal”;
-  - lista produkcyjna potrzebuje skończonego zbioru porcji.
-
-## Pytania do rozstrzygnięcia razem z wyborem
-- **Jadłospis:** wspólny dla diety ze skalowanymi porcjami czy osobny per wariant? Wspólny pasuje do B i do danych przykładowych z T-016.
-- **Cena:** za dzień, zawsze brutto (klient końcowy jest konsumentem). Rabaty za dłuższy okres: w Fazie 1 czy później?
-- **Reprezentacja `Money`:** kwota w groszach (`Long`) czy `BigDecimal` + waluta? Czy waluta jest w ogóle potrzebna, skoro działamy tylko w PLN?
-- **Warianty kaloryczne:** stała lista platformy czy dowolna lista per tenant?
-- **Usuwanie:** wariant z zamówieniami tylko dezaktywujemy, nigdy nie usuwamy?
+Rozważane opcje:
+- **A. Płasko (stan obecny):** jedna dieta = jedna kaloryczność. Najprostsze, ale jadłospis trzeba by wpisywać osobno dla każdej kaloryczności, a sklep pokazuje kilka kart tej samej diety.
+- **B. Dieta z wariantami kalorycznymi:** wybrana.
+- **C. Cena liczona z kaloryczności** (stawka bazowa + stawka za kcal, dowolne kcal): nietypowe na rynku, a kuchnia i lista produkcyjna potrzebują skończonego zbioru porcji.
 
 ## Decyzja
-_Do uzupełnienia po rozmowie._
+- **Dieta (`Diet`)** należy do tenanta: nazwa, opis, slug (do URL-i, ADR 0008), stan (aktywna/nieaktywna). Ma co najmniej jeden **wariant**.
+- **Wariant (`DietVariant`)** należy do diety: kaloryczność, cena za dzień, stan. Kaloryczność jest unikalna w obrębie diety. Listę kaloryczności definiuje właściciel; platforma nie narzuca stałego zestawu.
+- **Cena per wariant**, za dzień, **brutto**. Ta sama cena we wszystkich wariantach też jest dozwolona. Rabatów (np. za dłuższy okres) w Fazie 1 nie ma.
+- **`Money`:** kwota w groszach (`Long`), tylko PLN. Pole waluty dodamy, gdy pojawi się druga waluta.
+- **Jadłospis należy do diety**, a nie do wariantu: wszystkie kaloryczności mają te same posiłki, różnią się porcjami.
+- **Bez usuwania:** diety i warianty tylko dezaktywujemy, bo zapytania i zamówienia się do nich odwołują. Aktywna dieta musi mieć co najmniej jeden aktywny wariant.
+- **Płatności poza systemem:** cena jest informacją dla klienta. Płatność odbywa się przelewem po ustaleniach z właścicielem (szczegóły w decyzji o zapytaniach i zamówieniach).
 
 ## Konsekwencje
-_Do uzupełnienia po decyzji._ Przy wyborze B: nowa migracja (`diets` + `diet_variants`), zmiana nazwy `DietPlan` → `Diet` w kodzie i słowniku, nowe endpointy E1, przebudowa karty diety w sklepie i formularza w panelu.
+- `Diet` to agregat z kolekcją wariantów i niezmiennikami (unikalna kaloryczność, co najmniej jeden aktywny wariant w aktywnej diecie, cena > 0).
+- Nowe tabele (`diets` + `diet_variants`) powstają obok `diet_plans`. Stary model usuwamy na końcu E1, gdy front przejdzie na nowe API. Danych produkcyjnych jeszcze nie ma, więc nie trzeba ich przenosić.
+- Zmiana nazwy `DietPlan` → `Diet` w kodzie, API i słowniku; nowe endpointy E1 w `/api/v1/shop` i `/api/v1/admin`.
+- Sklep: jedna karta na dietę z ceną „od X zł/dzień” i wyborem kaloryczności. Panel: edycja diety razem z wariantami.
+- Zapytania i zamówienia wskazują **wariant** (a przez niego dietę).

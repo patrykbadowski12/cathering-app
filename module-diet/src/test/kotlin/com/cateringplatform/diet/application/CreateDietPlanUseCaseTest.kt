@@ -1,7 +1,7 @@
 package com.cateringplatform.diet.application
 
-import com.cateringplatform.diet.domain.DietPlanState
-import com.cateringplatform.diet.domain.InvalidDietPlanException
+import com.cateringplatform.diet.domain.DietState
+import com.cateringplatform.diet.domain.InvalidDietException
 import com.cateringplatform.shared.tenant.TenantId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -27,7 +27,7 @@ class CreateDietPlanUseCaseTest {
         // then
         assertEquals(name, result.name)
         assertEquals(kcal, result.kcal)
-        assertEquals(DietPlanState.ACTIVE, result.state)
+        assertEquals(DietState.ACTIVE, result.state)
         assertEquals(tenantId, result.tenantId)
         val dietPlans = inMemoryDietPlanRepository.findAllByTenantId(tenantId)
         assertEquals(1, dietPlans.size)
@@ -41,7 +41,7 @@ class CreateDietPlanUseCaseTest {
         val kcal = 10
 
         // when
-        assertThrows<InvalidDietPlanException> {
+        assertThrows<InvalidDietException> {
             createDietPlanUseCase.execute(tenantId, name, kcal)
         }
 
