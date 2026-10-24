@@ -3,6 +3,7 @@
 | Gdzie | Co |
 |---|---|
 | [`board.md`](board.md) | Tablica zadań: statusy, kolejność, epiki |
+| [`roadmap.md`](roadmap.md) | Kolejność prac do MVP i dalej, funkcje pokazowe, backlog pomysłów |
 | [`tasks/`](tasks/) | Jeden plik = jedno zadanie (cel, kryteria, wskazówki, review) |
 | [`decisions/`](decisions/) | ADR, czyli zapisane decyzje architektoniczne i otwarte pytania |
 | [`glossary.md`](glossary.md) | Słownik domeny (ubiquitous language) |
@@ -77,7 +78,7 @@ Reguły są w `.editorconfig` (czyta je i IntelliJ, i ktlint). `./gradlew build`
 
 - **Małe, ale z celem.** Każde zadanie kończy się czymś, co działa albo czymś, co zostało zdecydowane, a nie „połową refaktoru”.
 - **Kryteria akceptacji są sprawdzalne.** Da się odpowiedzieć tak lub nie.
-- **Wskazówki, nie gotowce.** Kod piszesz Ty, Claude robi review i tłumaczy dlaczego.
+- **Wskazówki, nie gotowce.** Kod backendu piszesz Ty, Claude robi review i tłumaczy dlaczego. Funkcjonalnego kodu backendu Claude nie pisze nawet na prośbę; testy, konfiguracja i narzędzia są OK.
 - Zadania z późniejszych epików rozpisujemy dopiero, gdy do nich dojdziemy, bo wtedy wiemy więcej.
 
 ## Zasady ADR

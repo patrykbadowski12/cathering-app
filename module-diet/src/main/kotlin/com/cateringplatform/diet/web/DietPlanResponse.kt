@@ -1,14 +1,14 @@
 package com.cateringplatform.diet.web
 
 import com.cateringplatform.diet.domain.DietPlan
-import com.cateringplatform.diet.domain.DietPlanState
+import com.cateringplatform.diet.domain.DietState
 import java.util.UUID
 
 data class DietPlanResponse(
     val id: UUID,
     val name: String,
     val kcal: Int,
-    val state: DietPlanState,
+    val state: DietState,
 ) {
     companion object {
         fun fromDomain(dietPlan: DietPlan) = DietPlanResponse(

@@ -26,7 +26,7 @@ class DietPlanTest {
         assertEquals(TEST_NAME, result.name)
         assertEquals(TEST_KCAL, result.kcal)
         assertEquals(tenantId, result.tenantId)
-        assertEquals(DietPlanState.ACTIVE, result.state)
+        assertEquals(DietState.ACTIVE, result.state)
     }
 
     @Test
@@ -41,13 +41,13 @@ class DietPlanTest {
         assertEquals(TEST_NAME, result.name)
         assertEquals(1, result.kcal)
         assertEquals(tenantId, result.tenantId)
-        assertEquals(DietPlanState.ACTIVE, result.state)
+        assertEquals(DietState.ACTIVE, result.state)
     }
 
     @Test
     fun `should throw exception when name is empty`() {
         // given & when
-        val exception = assertThrows<InvalidDietPlanException> {
+        val exception = assertThrows<InvalidDietException> {
             DietPlan.create(TenantId(UUID.randomUUID()), "", TEST_KCAL)
         }
 
@@ -58,7 +58,7 @@ class DietPlanTest {
     @Test
     fun `should throw exception when name is fake empty`() {
         // given & when
-        val exception = assertThrows<InvalidDietPlanException> {
+        val exception = assertThrows<InvalidDietException> {
             DietPlan.create(TenantId(UUID.randomUUID()), "      ", TEST_KCAL)
         }
 
@@ -81,7 +81,7 @@ class DietPlanTest {
     @Test
     fun `should throw exception when name is longer than max length`() {
         // given & when
-        val exception = assertThrows<InvalidDietPlanException> {
+        val exception = assertThrows<InvalidDietException> {
             DietPlan.create(TenantId(UUID.randomUUID()), "a".repeat(DietPlan.MAX_NAME_LENGTH + 1), TEST_KCAL)
         }
 
@@ -95,7 +95,7 @@ class DietPlanTest {
     @Test
     fun `should throw exception when kcal is negative value`() {
         // given & when
-        val exception = assertThrows<InvalidDietPlanException> {
+        val exception = assertThrows<InvalidDietException> {
             DietPlan.create(TenantId(UUID.randomUUID()), TEST_NAME, -1)
         }
 
@@ -106,7 +106,7 @@ class DietPlanTest {
     @Test
     fun `should throw exception when kcal is zero`() {
         // given & when
-        val exception = assertThrows<InvalidDietPlanException> {
+        val exception = assertThrows<InvalidDietException> {
             DietPlan.create(TenantId(UUID.randomUUID()), TEST_NAME, 0)
         }
 
